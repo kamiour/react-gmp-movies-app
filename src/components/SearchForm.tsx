@@ -1,5 +1,5 @@
 import React from 'react';
-import './SearchForm.scss'
+import './SearchForm.scss';
 
 interface SearchFormInterface {
   searchValue: string;
@@ -27,7 +27,7 @@ export default class SearchForm extends React.Component<{}, SearchFormInterface>
     return (
       <>
         <h3>SearchForm (Class component):</h3>
-        
+
         <form className="searchform" onSubmit={this.handleSubmit}>
           <input
             className="searchform-input"
@@ -36,7 +36,9 @@ export default class SearchForm extends React.Component<{}, SearchFormInterface>
             onChange={this.handleChange}
             placeholder="What do you want to watch?"
           />
-          <button className="searchform-btn" type="submit">Search</button>
+          <button className="searchform-btn" type="submit">
+            Search
+          </button>
         </form>
       </>
     );

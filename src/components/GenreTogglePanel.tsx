@@ -21,16 +21,16 @@ export default class GenreTogglePanel extends React.Component<GenreToggleProps, 
     super(props);
 
     this.state = {
-      selectedGenreId: this.props.selectedGenreId
-    }
+      selectedGenreId: this.props.selectedGenreId,
+    };
 
     this.handleSelect = this.handleSelect.bind(this);
   }
 
   handleSelect(id: string): void {
     this.setState({
-      selectedGenreId: id
-    })
+      selectedGenreId: id,
+    });
   }
 
   render() {
@@ -48,10 +48,10 @@ export default class GenreTogglePanel extends React.Component<GenreToggleProps, 
                 genreTitle={genre.title}
                 handleSelect={this.handleSelect}
               />
-            )
+            );
           })}
         </div>
       </>
-    )
+    );
   }
 }
