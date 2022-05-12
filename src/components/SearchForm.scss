@@ -1,0 +1,46 @@
+@import '../scss/variables';
+
+.searchform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../assets/bg-images.png');
+  height: 300px;
+
+  .searchform-input {
+    width: 713px;
+    background: rgba($color_nero, 0.7);
+    border-radius: 4px;
+    margin-right: 14px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: $color_white;
+    padding: 16px 19px;
+    border: none;
+
+    &::placeholder {
+      color: rgba($color_white, 0.3);
+    }
+  }
+  
+  .searchform-btn {
+    width: 233px;
+    height: 57px;
+    color: $color_white;
+    background-color: $color_wild_watermelon;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($color_wild_watermelon, 5%);
+    }
+  }
+}
