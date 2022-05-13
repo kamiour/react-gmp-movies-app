@@ -26,7 +26,7 @@ export default class SearchForm extends React.Component<{}, SearchFormInterface>
   render() {
     return (
       <>
-        <h3>SearchForm (Class component):</h3>
+        <h3>SearchForm (React.Component):</h3>
 
         <form className="searchform" onSubmit={this.handleSubmit}>
           <input

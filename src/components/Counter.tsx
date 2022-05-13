@@ -5,7 +5,7 @@ interface CounterState {
   counterValue: number;
 }
 
-export default class Counter extends React.Component<{}, CounterState> {
+export default class Counter extends React.PureComponent<{}, CounterState> {
   constructor(props: {}) {
     super(props);
 
@@ -38,12 +38,16 @@ export default class Counter extends React.Component<{}, CounterState> {
   render() {
     return (
       <>
-        <h3>Counter (Class component):</h3>
+        <h3>Counter (React.PureComponent):</h3>
 
         <div className="counter">
-          <button className="counter-btn" onClick={this.decreaseCount}>-</button>
+          <button className="counter-btn" onClick={this.decreaseCount} disabled={this.state.counterValue === 0}>
+            -
+          </button>
           <span className="counter-value">{this.state.counterValue}</span>
-          <button className="counter-btn" onClick={this.increaseCount}>+</button>
+          <button className="counter-btn" onClick={this.increaseCount}>
+            +
+          </button>
         </div>
       </>
     );

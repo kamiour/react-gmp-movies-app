@@ -36,7 +36,7 @@ export default class GenreTogglePanel extends React.Component<GenreToggleProps, 
   render() {
     return (
       <>
-        <h3>Genre Toggle (Class component):</h3>
+        <h3>Genre Toggle (React.Component):</h3>
 
         <div className="genre-panel">
           {this.props.genres.map((genre: Genre) => {

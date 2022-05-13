@@ -12,6 +12,10 @@
     background-color: beige;
     border: 1px solid gray;
     cursor: pointer;
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
   }
 
   .counter-value {
