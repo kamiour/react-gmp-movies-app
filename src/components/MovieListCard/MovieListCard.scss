@@ -1,0 +1,38 @@
+@import 'src/scss/variables';
+
+.movies-list-card {
+  text-align: left;
+
+  .movies-list-card-image {
+    max-width: 100%;
+    margin-bottom: 22px;
+  }
+
+  .movies-list-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: rgba($color_white, 0.7);
+    margin-bottom: 8px;
+  }
+
+  .movies-list-card-year {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba($color_white, 0.7);
+    padding: 4px 8px;
+    border: 1px solid $color_matterhorn;
+    border-radius: 4px;
+  }
+
+  .movies-list-card-genres {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba($color_white, 0.5);
+  }
+}
