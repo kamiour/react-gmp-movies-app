@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './GenreTogglePanel.scss';
+import './FilterPanel.scss';
 import GenreToggleButton from '../../components/GenreToggleButton/GenreToggleButton';
 
 interface Genre {

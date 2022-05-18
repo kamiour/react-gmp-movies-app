@@ -1,7 +1,7 @@
-import SearchForm from '../SearchForm/SearchForm';
+import { PropsWithChildren } from 'react';
 import './Hero.scss';
 
-function Hero(props: any) {
+function Hero(props: PropsWithChildren<{}>) {
   return (
     <div className="hero">
       <div className="hero-overlay"></div>

@@ -25,7 +25,7 @@ export default function SearchForm() {
           onChange={handleChange}
           placeholder="What do you want to watch?"
         />
-        <button className="searchform-btn" type="submit">
+        <button className="searchform-btn" type="submit" disabled={!searchValue}>
           Search
         </button>
       </form>

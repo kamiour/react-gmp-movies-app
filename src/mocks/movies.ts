@@ -1,4 +1,6 @@
-export const movies = [
+import { Movie } from '../models/Movie';
+
+export const movies: Movie[] = [
   {
     id: 337167,
     title: 'Fifty Shades Freed',

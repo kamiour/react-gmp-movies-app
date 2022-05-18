@@ -3,7 +3,7 @@ import './App.scss';
 import { genres } from './mocks/genres';
 
 import SearchForm from './components/SearchForm/SearchForm';
-import GenreTogglePanel from './containers/GenreTogglePanel/GenreTogglePanel';
+import FilterPanel from './containers/FilterPanel/FilterPanel';
 import Logo from './components/Logo/Logo';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
@@ -15,24 +15,32 @@ import MoviesListOptions from './components/MoviesListOptions/MoviesListOptions'
 import MoviesList from './containers/MoviesList/MoviesList';
 import Main from './components/Main/Main';
 import { movies } from './mocks/movies';
+import MovieCardSelected from './components/MovieCardSelected/MovieCardSelected';
+import SortPanel from './containers/SortPanel/SortPanel';
 
 function App() {
+  const isMovieSelected = false;
+
   return (
     <div className="App">
-      <Hero>
-        <Header>
-          <Logo />
-          <AddMovieBtn />
-        </Header>
+      {!isMovieSelected && (
+        <Hero>
+          <Header>
+            <Logo />
+            <AddMovieBtn />
+          </Header>
 
-        <SearchForm />
-      </Hero>
+          <SearchForm />
+        </Hero>
+      )}
+
+      {isMovieSelected && <MovieCardSelected movie={movies[0]} />}
 
       <Main>
         <MoviesListOptions>
           <OptionsPanel>
-            <GenreTogglePanel genres={genres} selectedGenreId={genres[1].id} />
-            <div>sort by: release date</div>
+            <FilterPanel genres={genres} selectedGenreId={genres[1].id} />
+            <SortPanel />
           </OptionsPanel>
 
           <MoviesFound />
