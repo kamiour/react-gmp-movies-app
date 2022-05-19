@@ -17,6 +17,7 @@ import Main from './components/Main/Main';
 import { movies } from './mocks/movies';
 import MovieCardSelected from './components/MovieCardSelected/MovieCardSelected';
 import SortPanel from './containers/SortPanel/SortPanel';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 function App() {
   const isMovieSelected = false;
@@ -46,7 +47,9 @@ function App() {
           <MoviesFound />
         </MoviesListOptions>
 
-        <MoviesList movies={movies}></MoviesList>
+        <ErrorBoundary componentName="MoviesList">
+          <MoviesList movies={movies}></MoviesList>
+        </ErrorBoundary>
       </Main>
 
       <Footer>

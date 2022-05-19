@@ -16,21 +16,8 @@ export const movies: Movie[] = [
     genres: ['Drama', 'Romance'],
     runtime: 106,
   },
-  {
-    id: 269149,
-    title: 'Zootopia',
-    tagline: 'Welcome to the urban jungle.',
-    vote_average: 7.7,
-    vote_count: 6795,
-    release_date: '2016-02-11',
-    poster_path: 'https://image.tmdb.org/t/p/w500/sM33SANp9z6rXW8Itn7NnG1GOEs.jpg',
-    overview:
-      "Determined to prove herself, Officer Judy Hopps, the first bunny on Zootopia's police force, jumps at the chance to crack her first case - even if it means partnering with scam-artist fox Nick Wilde to solve the mystery.",
-    budget: 150000000,
-    revenue: 1023784195,
-    genres: ['Animation', 'Adventure', 'Family', 'Comedy'],
-    runtime: 108,
-  },
+  /* Uncomment to force an error for ErrorBoundary for MoviesList */
+  // null as unknown as Movie,
   {
     id: 181808,
     title: 'Star Wars: The Last Jedi',
@@ -43,7 +30,7 @@ export const movies: Movie[] = [
       'Rey develops her newly discovered abilities with the guidance of Luke Skywalker, who is unsettled by the strength of her powers. Meanwhile, the Resistance prepares to do battle with the First Order.',
     budget: 200000000,
     revenue: 1325937250,
-    genres: ['Fantasy', 'Adventure', 'Science Fiction'],
+    genres: 'Fantasy' as any, // to force an error for ErrorBoundary for MovieListCard
     runtime: 152,
   },
   {
