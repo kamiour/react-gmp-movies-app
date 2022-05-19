@@ -1,5 +1,5 @@
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import MoviesListCard from '../../components/MovieListCard/MovieListCard';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import MoviesListCard from '../MovieListCard/MovieListCard';
 import { Movie } from '../../models/Movie';
 import './MoviesList.scss';
 

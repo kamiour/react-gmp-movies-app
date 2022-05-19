@@ -9,6 +9,10 @@ interface SelectValue {
   label: string;
 }
 
+interface SortPanelProps {
+  sortByValue: SelectValue;
+}
+
 const options: SelectValue[] = [
   { value: 'release_date', label: 'Release Date' },
   { value: 'vote_average', label: 'Rating' },
@@ -17,8 +21,8 @@ const options: SelectValue[] = [
 
 const customStyles = sortSelectStyles;
 
-export default function SortPanel() {
-  const [selectedSort, setSelectedSort] = useState<SelectValue | null>(options[0]);
+export default function SortPanel(props: SortPanelProps) {
+  const [selectedSort, setSelectedSort] = useState<SelectValue | null>(props.sortByValue);
 
   function onChange(selectedValue: SingleValue<SelectValue>) {
     setSelectedSort(selectedValue);
