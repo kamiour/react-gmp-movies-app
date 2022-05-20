@@ -1,8 +1,6 @@
 import { PropsWithChildren } from 'react';
 import './Footer.scss';
 
-function Footer(props: PropsWithChildren<{}>) {
-  return <footer className="footer">{props.children}</footer>;
-}
+const Footer = ({ children }: PropsWithChildren<{}>) => <footer className="footer">{children}</footer>;
 
 export default Footer;

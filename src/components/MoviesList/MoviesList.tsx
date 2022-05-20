@@ -3,10 +3,14 @@ import MoviesListCard from '../MovieListCard/MovieListCard';
 import { Movie } from '../../models/Movie';
 import './MoviesList.scss';
 
-function MoviesList(props: { movies: Movie[] }) {
+interface MoviesListProps {
+  movies: Movie[];
+}
+
+function MoviesList({ movies }: MoviesListProps) {
   return (
     <ul className="movies-list">
-      {props.movies.map((movie: Movie) => (
+      {movies.map((movie: Movie) => (
         <li key={movie.id} className="movies-list-item">
           <ErrorBoundary componentName="MoviesListCard">
             <MoviesListCard movie={movie} />

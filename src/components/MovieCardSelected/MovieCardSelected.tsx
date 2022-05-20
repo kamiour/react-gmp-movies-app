@@ -5,13 +5,17 @@ import Logo from '../Logo/Logo';
 import { transformDuration } from '../../utils/transformDuration';
 import { Movie } from '../../models/Movie';
 
-function MovieCardSelected(props: { movie: Movie }) {
-  const movie = props.movie;
+interface MovieCardSelectedProps {
+  movie: Movie;
+}
 
+function MovieCardSelected({ movie }: MovieCardSelectedProps) {
   function handleGoToSearch() {
     console.log('go to search');
     // handle go to searchs
   }
+
+  const { title, poster_path, vote_average, genres, release_date, runtime, overview } = movie;
 
   return (
     <div className="movie-card-selected">
@@ -24,21 +28,21 @@ function MovieCardSelected(props: { movie: Movie }) {
       </div>
 
       <div className="movie-card-selected-body">
-        <img className="movie-card-selected-image" alt={`${movie.title} poster`} src={movie.poster_path} />
+        <img className="movie-card-selected-image" alt={`${title} poster`} src={poster_path} />
 
         <div className="movie-card-selected-content">
           <div className="movie-card-selected-content-header">
-            <span className="movie-card-selected-title">{movie.title}</span>
-            <span className="movie-card-selected-rating">{movie.vote_average}</span>
+            <span className="movie-card-selected-title">{title}</span>
+            <span className="movie-card-selected-rating">{vote_average}</span>
           </div>
           <div className="movie-card-selected-genres">
-            <span>{movie.genres.join(', ')}</span>
+            <span>{genres.join(', ')}</span>
           </div>
           <div className="movie-card-selected-info">
-            <span>{movie.release_date.slice(0, 4)}</span>
-            <span>{transformDuration(movie.runtime)}</span>
+            <span>{release_date.slice(0, 4)}</span>
+            <span>{transformDuration(runtime)}</span>
           </div>
-          <div className="movie-card-selected-overview">{movie.overview}</div>
+          <div className="movie-card-selected-overview">{overview}</div>
         </div>
       </div>
     </div>

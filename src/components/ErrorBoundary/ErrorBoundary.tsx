@@ -10,10 +10,7 @@ interface ErrorBoundaryState {
 }
 
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  state = { hasError: false };
 
   static getDerivedStateFromError(error) {
     return { hasError: true };
@@ -24,13 +21,13 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
   }
 
   render() {
-    const childComponentName = this.props.componentName;
+    const { componentName, children } = this.props;
 
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <h2 className="error-boundary">Something went wrong with {childComponentName}!</h2>;
+      return <h2 className="error-boundary">Something went wrong with {componentName}!</h2>;
     }
 
-    return this.props.children;
+    return children;
   }
 }

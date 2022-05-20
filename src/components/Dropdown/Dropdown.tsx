@@ -8,18 +8,18 @@ interface DropdownConfig {
   handleClose: () => void;
 }
 
-function Dropdown(props: DropdownConfig) {
+function Dropdown({ items, handleSelect, handleClose }: DropdownConfig) {
   return (
     <div className="dropdown">
       <ul>
-        {props.items.map((item) => (
-          <li key={item.id} className="dropdown-item" onClick={() => props.handleSelect(item.id)}>
+        {items.map((item) => (
+          <li key={item.id} className="dropdown-item" onClick={() => handleSelect(item.id)}>
             {item.title}
           </li>
         ))}
       </ul>
 
-      <button onClick={() => props.handleClose()} className="dropdown-close-btn">
+      <button onClick={() => handleClose()} className="dropdown-close-btn">
         <FontAwesomeIcon icon={faClose} />
       </button>
     </div>

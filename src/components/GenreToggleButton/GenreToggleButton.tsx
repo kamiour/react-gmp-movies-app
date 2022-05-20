@@ -1,16 +1,15 @@
 import './GenreToggleButton.scss';
 
 interface GenreButtonProps {
-  genreId: string;
   genreTitle: string;
   isSelected: boolean;
-  handleSelect: (id: string) => void;
+  handleSelect: () => void;
 }
 
-export default function GenreToggleButton(props: GenreButtonProps) {
+export default function GenreToggleButton({ isSelected, handleSelect, genreTitle }: GenreButtonProps) {
   return (
-    <button className={`genre-button ${props.isSelected ? 'selected' : ''}`} onClick={() => props.handleSelect(props.genreId)}>
-      {props.genreTitle}
+    <button className={`genre-button ${isSelected ? 'selected' : ''}`} onClick={handleSelect}>
+      {genreTitle}
     </button>
   );
 }

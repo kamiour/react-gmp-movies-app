@@ -1,40 +1,26 @@
 import './SortPanel.scss';
-
-import Select, { SingleValue } from 'react-select';
-import { useState } from 'react';
+import Select from 'react-select';
 import { sortSelectStyles } from './sortSelectStyles';
-
-interface SelectValue {
-  value: string;
-  label: string;
-}
+import { SelectValue } from '../../models/SelectValue';
 
 interface SortPanelProps {
+  sortOptions: SelectValue[];
   sortByValue: SelectValue;
+  handleSelect: (value: React.SetStateAction<SelectValue>) => void;
 }
-
-const options: SelectValue[] = [
-  { value: 'release_date', label: 'Release Date' },
-  { value: 'vote_average', label: 'Rating' },
-  { value: 'runtime', label: 'Duration' },
-];
 
 const customStyles = sortSelectStyles;
 
-export default function SortPanel(props: SortPanelProps) {
-  const [selectedSort, setSelectedSort] = useState<SelectValue | null>(props.sortByValue);
-
-  function onChange(selectedValue: SingleValue<SelectValue>) {
-    setSelectedSort(selectedValue);
-
-    // handle sort value change
-    console.log(selectedValue);
-  }
-
+export default function SortPanel({ sortOptions, sortByValue, handleSelect }: SortPanelProps) {
   return (
     <div className="sort-panel">
       <span className="sort-panel-label">Sort by</span>
-      <Select value={selectedSort} options={options} styles={customStyles} onChange={onChange} />
+      <Select
+        value={sortByValue}
+        options={sortOptions}
+        styles={customStyles}
+        onChange={(value) => handleSelect(value as React.SetStateAction<SelectValue>)}
+      />
     </div>
   );
 }

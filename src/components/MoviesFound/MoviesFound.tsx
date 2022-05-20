@@ -4,9 +4,7 @@ interface MoviesFoundProps {
   numberOfMovies: number;
 }
 
-function MoviesFound(props: MoviesFoundProps) {
-  const { numberOfMovies } = props;
-
+function MoviesFound({ numberOfMovies }: MoviesFoundProps) {
   return (
     <div className="movies-found">
       <span className="movies-found-value">{numberOfMovies}</span> movies found

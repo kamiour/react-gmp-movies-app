@@ -5,6 +5,10 @@ import Dropdown from '../Dropdown/Dropdown';
 import { useState } from 'react';
 import { Movie } from '../../models/Movie';
 
+interface MoviesListCardProps {
+  movie: Movie;
+}
+
 const dropdownItems = [
   {
     id: 1,
@@ -16,8 +20,7 @@ const dropdownItems = [
   },
 ];
 
-function MoviesListCard(props: { movie: Movie }) {
-  const movie = props.movie;
+function MoviesListCard({ movie }: MoviesListCardProps) {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
 
   function handleEdit() {
@@ -39,17 +42,19 @@ function MoviesListCard(props: { movie: Movie }) {
     console.log('movie selected');
   }
 
+  const { title, poster_path, release_date, genres } = movie;
+
   return (
     <div className="movies-list-card">
-      <img className="movies-list-card-image" alt={`${movie.title} poster`} src={movie.poster_path} onClick={() => handleMovieSelect()} />
+      <img className="movies-list-card-image" alt={`${title} poster`} src={poster_path} onClick={() => handleMovieSelect()} />
       <div className="movies-list-card-header">
         <span className="movies-list-card-title" onClick={() => handleMovieSelect()}>
-          {movie.title}
+          {title}
         </span>
-        <span className="movies-list-card-year">{movie.release_date.slice(0, 4)}</span>
+        <span className="movies-list-card-year">{release_date.slice(0, 4)}</span>
       </div>
       <div className="movies-list-card-genres">
-        <span>{movie.genres.join(', ')}</span>
+        <span>{genres.join(', ')}</span>
       </div>
 
       <button onClick={() => setIsContextMenuOpen(true)} className="context-menu-btn">

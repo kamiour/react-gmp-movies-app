@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
@@ -8,10 +9,10 @@ import { movies } from '../../mocks/movies';
 
 export default function HeroContainer() {
   // logic to get isMovieSelected value
-  const isMovieSelected = false;
+  const [isMovieSelected, setIsMovieSelected] = useState(false);
 
   // logic to get selectedMovie value
-  const selectedMovie = movies[0];
+  const [selectedMovie, setSelectedMovie] = useState(movies[0]);
 
   const heroElement = !isMovieSelected ? (
     <Hero>
