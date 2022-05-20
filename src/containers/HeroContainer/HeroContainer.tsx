@@ -3,6 +3,7 @@ import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
 import Logo from '../../components/Logo/Logo';
+import Modal from '../../components/Modal/Modal';
 import MovieCardSelected from '../../components/MovieCardSelected/MovieCardSelected';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import { movies } from '../../mocks/movies';
@@ -14,14 +15,24 @@ export default function HeroContainer() {
   // logic to get selectedMovie value
   const [selectedMovie, setSelectedMovie] = useState(movies[0]);
 
+  const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
+
+  const modal = shouldShowAddMovieModal ? (
+    <Modal title="Add Movie" handleClose={() => setShouldShowAddMovieModal(false)}>
+      <form>Add movie form here</form>
+    </Modal>
+  ) : null;
+
   const heroElement = !isMovieSelected ? (
     <Hero>
       <Header>
         <Logo />
-        <AddMovieBtn />
+        <AddMovieBtn handleClick={() => setShouldShowAddMovieModal(true)} />
       </Header>
 
       <SearchForm />
+
+      {modal}
     </Hero>
   ) : (
     <MovieCardSelected movie={selectedMovie} />
