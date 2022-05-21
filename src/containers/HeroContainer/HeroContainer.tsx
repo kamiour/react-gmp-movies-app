@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
+import EditMovieForm from '../../components/EditMovieForm/EditMovieForm';
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
 import Logo from '../../components/Logo/Logo';
@@ -7,6 +8,7 @@ import Modal from '../../components/Modal/Modal';
 import MovieCardSelected from '../../components/MovieCardSelected/MovieCardSelected';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import { movies } from '../../mocks/movies';
+import { Movie } from '../../models/Movie';
 
 export default function HeroContainer() {
   // logic to get isMovieSelected value
@@ -17,9 +19,13 @@ export default function HeroContainer() {
 
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 
+  function handleMovieFormSubmit(formValue: Partial<Movie>) {
+    console.log(formValue);
+  }
+
   const modal = shouldShowAddMovieModal ? (
     <Modal title="Add Movie" handleClose={() => setShouldShowAddMovieModal(false)}>
-      <form>Add movie form here</form>
+      <EditMovieForm movie={null} onSubmit={handleMovieFormSubmit} />
     </Modal>
   ) : null;
 
