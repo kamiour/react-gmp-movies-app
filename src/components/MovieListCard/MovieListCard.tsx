@@ -46,9 +46,9 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   return (
     <div className="movies-list-card">
-      <img className="movies-list-card-image" alt={`${title} poster`} src={poster_path} onClick={() => handleMovieSelect()} />
+      <img className="movies-list-card-image" alt={`${title} poster`} src={poster_path} onClick={handleMovieSelect} />
       <div className="movies-list-card-header">
-        <span className="movies-list-card-title" onClick={() => handleMovieSelect()}>
+        <span className="movies-list-card-title" onClick={handleMovieSelect}>
           {title}
         </span>
         <span className="movies-list-card-year">{release_date.slice(0, 4)}</span>

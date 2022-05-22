@@ -15,6 +15,14 @@ function MovieCardSelected({ movie }: MovieCardSelectedProps) {
     // handle go to searchs
   }
 
+  function getYear(releaseDate: string): string {
+    return releaseDate.slice(0, 4);
+  }
+
+  function joinGenres(genres: string[]): string {
+    return genres.join(', ');
+  }
+
   const { title, poster_path, vote_average, genres, release_date, runtime, overview } = movie;
 
   return (
@@ -22,7 +30,7 @@ function MovieCardSelected({ movie }: MovieCardSelectedProps) {
       <div className="movie-card-selected-header">
         <Logo />
 
-        <button onClick={() => handleGoToSearch()} className="movie-card-selected-search-btn">
+        <button onClick={handleGoToSearch} className="movie-card-selected-search-btn">
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </div>
@@ -36,10 +44,10 @@ function MovieCardSelected({ movie }: MovieCardSelectedProps) {
             <span className="movie-card-selected-rating">{vote_average}</span>
           </div>
           <div className="movie-card-selected-genres">
-            <span>{genres.join(', ')}</span>
+            <span>{joinGenres(genres)}</span>
           </div>
           <div className="movie-card-selected-info">
-            <span>{release_date.slice(0, 4)}</span>
+            <span>{getYear(release_date)}</span>
             <span>{transformDuration(runtime)}</span>
           </div>
           <div className="movie-card-selected-overview">{overview}</div>

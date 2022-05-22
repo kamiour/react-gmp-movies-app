@@ -5,16 +5,13 @@ import Hero from '../../components/Hero/Hero';
 import Logo from '../../components/Logo/Logo';
 import MovieCardSelected from '../../components/MovieCardSelected/MovieCardSelected';
 import SearchForm from '../../components/SearchForm/SearchForm';
-import { movies } from '../../mocks/movies';
+import { Movie } from '../../models/Movie';
 
 export default function HeroContainer() {
-  // logic to get isMovieSelected value
-  const [isMovieSelected, setIsMovieSelected] = useState(false);
-
   // logic to get selectedMovie value
-  const [selectedMovie, setSelectedMovie] = useState(movies[0]);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const heroElement = !isMovieSelected ? (
+  const heroElement = !selectedMovie ? (
     <Hero>
       <Header>
         <Logo />
