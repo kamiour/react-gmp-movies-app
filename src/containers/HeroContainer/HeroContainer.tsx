@@ -11,11 +11,8 @@ import { movies } from '../../mocks/movies';
 import { Movie } from '../../models/Movie';
 
 export default function HeroContainer() {
-  // logic to get isMovieSelected value
-  const [isMovieSelected, setIsMovieSelected] = useState(false);
-
   // logic to get selectedMovie value
-  const [selectedMovie, setSelectedMovie] = useState(movies[0]);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 
@@ -29,7 +26,7 @@ export default function HeroContainer() {
     </Modal>
   ) : null;
 
-  const heroElement = !isMovieSelected ? (
+  const heroElement = !selectedMovie ? (
     <Hero>
       <Header>
         <Logo />

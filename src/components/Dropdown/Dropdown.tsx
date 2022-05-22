@@ -19,7 +19,7 @@ function Dropdown({ items, handleSelect, handleClose }: DropdownConfig) {
         ))}
       </ul>
 
-      <button onClick={() => handleClose()} className="dropdown-close-btn">
+      <button onClick={handleClose} className="dropdown-close-btn">
         <FontAwesomeIcon icon={faClose} />
       </button>
     </div>
