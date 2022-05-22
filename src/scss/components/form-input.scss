@@ -12,4 +12,27 @@
   &::placeholder {
     color: rgba($color_white, 0.3);
   }
+
+  &[type="date"] {
+    position: relative;
+
+    &::-webkit-calendar-picker-indicator {
+      background: none;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    &::before {
+      display: block;
+      background: none;
+      font-family: $font_awesome;
+      content: '\f073';
+      width: 15px;
+      height: 20px;
+      position: absolute;
+      top: 17px;
+      right: 24px;
+      color: $color_wild_watermelon;
+    }
+  }
 }

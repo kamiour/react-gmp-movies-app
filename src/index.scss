@@ -6,7 +6,7 @@
 
 body {
   margin: 0;
-  font-family: 'Montserrat', 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: $font_primary, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -14,7 +14,7 @@ body {
   background-color: $color_matterhorn;
 
   * {
-    font-family: 'Montserrat', 'Segoe UI', 'Roboto', 'Oxygen',
+    font-family: $font_primary, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     box-sizing: border-box;
