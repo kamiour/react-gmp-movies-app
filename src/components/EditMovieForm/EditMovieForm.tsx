@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import { sortOptions } from '../../mocks/sortOptions';
+import { BaseSyntheticEvent, useState } from 'react';
+import { genres } from '../../mocks/genres';
 import { Movie } from '../../models/Movie';
+import { SelectValue } from '../../models/SelectValue';
+import { getSelectValuesFromGenres } from '../../utils/getSelectValuesFromGenres';
 import FormField from '../FormField/FormField';
 import FormSelect from '../FormSelect/FormSelect';
 import './EditMovie.scss';
@@ -9,6 +11,8 @@ interface EditMovieProps {
   movie: Movie | null;
   onSubmit: (formValue: Partial<Movie>) => void;
 }
+
+const genreSelectOptions = getSelectValuesFromGenres(genres);
 
 const EditMovieForm = ({ movie, onSubmit }: EditMovieProps) => {
   const initialFormValue: Partial<Movie> = {
@@ -21,21 +25,27 @@ const EditMovieForm = ({ movie, onSubmit }: EditMovieProps) => {
     genres: movie?.genres || [],
   };
 
-  const [formValue, setFormValue] = useState(initialFormValue);
+  const [formValue, setFormValue] = useState<Partial<Movie>>(initialFormValue);
 
-  function onChange(event) {
+  function onChange(event: BaseSyntheticEvent): void {
     setFormValue({
       ...formValue,
       [event.target.name]: event.target.value,
     });
   }
 
-  function resetForm() {
+  function handleGenreChange(selectedValues): void {
+    setFormValue({
+      ...formValue,
+      genres: selectedValues.map(({ value }) => value),
+    });
+  }
+
+  function resetForm(): void {
     setFormValue(initialFormValue);
   }
 
-  function onFormSubmit(event) {
-    // add typings for SyntheticBaseEvent
+  function onFormSubmit(event: BaseSyntheticEvent): void {
     event.preventDefault();
     onSubmit(formValue);
   }
@@ -92,7 +102,12 @@ const EditMovieForm = ({ movie, onSubmit }: EditMovieProps) => {
         </FormField>
 
         <FormField labelTitle="Genre:" id="genres">
-          <FormSelect value={null} options={sortOptions} isMulti={true} onChange={(value) => {}} />
+          <FormSelect
+            value={getSelectValuesFromGenres(formValue.genres as string[])}
+            isMulti
+            options={genreSelectOptions}
+            onChange={handleGenreChange}
+          />
         </FormField>
 
         <FormField labelTitle="Runtime:" id="runtime">

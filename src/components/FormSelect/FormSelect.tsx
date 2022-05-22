@@ -3,7 +3,7 @@ import { StateManagerProps } from 'react-select/dist/declarations/src/useStateMa
 import { formSelectStyles } from './formSelectStyles';
 
 function FormSelect(props: StateManagerProps) {
-  return <Select styles={formSelectStyles} {...props} />;
+  return <Select classNamePrefix="form-select" styles={formSelectStyles} {...props} />;
 }
 
 export default FormSelect;

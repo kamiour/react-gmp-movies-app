@@ -31,7 +31,7 @@ export const formSelectStyles = {
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    height: '56px',
+    minHeight: '56px',
     backgroundColor: '#555555',
     borderRadius: '4px',
   }),
@@ -40,6 +40,18 @@ export const formSelectStyles = {
     padding: '0 19px',
     fontSize: '20px',
     lineHeight: '24px',
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: '#F65261',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#FFFFFF',
+  }),
+  indicatorsContainer: (provided) => ({
+    ...provided,
+    color: 'red',
   }),
   placeholder: (provided) => ({
     ...provided,
@@ -66,5 +78,10 @@ export const formSelectStyles = {
   }),
   indicatorSeparator: () => ({
     display: 'none',
+  }),
+  clearIndicator: (provided) => ({
+    ...provided,
+    color: '#FFFFFF',
+    cursor: 'pointer',
   }),
 };
