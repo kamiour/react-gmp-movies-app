@@ -1,24 +1,25 @@
 import './App.scss';
 
-import Counter from './components/Counter';
-import HelloWorld from './components/HelloWorld';
-import SearchForm from './components/SearchForm';
-import GenreToggle from './components/GenreTogglePanel';
-import { genres } from './mocks/genres';
+import Logo from './components/Logo/Logo';
+import Footer from './components/Footer/Footer';
+import Main from './components/Main/Main';
+import MoviesListContainer from './containers/MoviesListContainer/MoviesListContainer';
+import HeroContainer from './containers/HeroContainer/HeroContainer';
+import MoviesListOptionsContainer from './containers/MoviesListOptionsContainer/MoviesListOptionsContainer';
 
 function App() {
   return (
     <div className="App">
-      <HelloWorld />
-      <hr />
+      <HeroContainer />
 
-      <Counter />
-      <hr />
+      <Main>
+        <MoviesListOptionsContainer />
+        <MoviesListContainer />
+      </Main>
 
-      <SearchForm />
-      <hr />
-
-      <GenreToggle genres={genres} selectedGenreId={genres[1].id} />
+      <Footer>
+        <Logo />
+      </Footer>
     </div>
   );
 }
