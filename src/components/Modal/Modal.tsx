@@ -12,17 +12,13 @@ interface ModalConfig {
 const modalRoot = document.getElementById('modal-container');
 
 const Modal = ({ title, handleClose, children }: PropsWithChildren<ModalConfig>) => {
-  const el: HTMLElement = document.createElement('div');
-
   useEffect(() => {
-    modalRoot!.appendChild(el);
     document.body.classList.add('no-scroll');
 
     return () => {
-      modalRoot!.removeChild(el);
       document.body.classList.remove('no-scroll');
     };
-  });
+  }, []);
 
   const closeBtn = (
     <button onClick={() => handleClose()} className="modal-close-btn">
@@ -44,7 +40,7 @@ const Modal = ({ title, handleClose, children }: PropsWithChildren<ModalConfig>)
     </div>
   );
 
-  return ReactDOM.createPortal(modalLayout, el);
+  return ReactDOM.createPortal(modalLayout, modalRoot as HTMLElement);
 };
 
 export default Modal;
