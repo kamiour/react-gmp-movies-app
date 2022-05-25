@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
+import { FetchedMoviesContext } from '../../App';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import MoviesFound from '../../components/MoviesFound/MoviesFound';
 import SortPanel from '../../components/SortPanel/SortPanel';
@@ -14,17 +15,19 @@ export default function MoviesListOptionsContainer() {
   const [optionsToSortBy, setSortOptions] = useState(sortOptions); // add logic to get options from server
   const [sortBy, setSortBy] = useState({ value: 'release_date', label: 'Release Date' }); // add logic to get sortBy value from server
 
-  const [numberOfMoviesFound, setNumberOfMoviesFound] = useState(39); // add logic to get number from server
+  const [{ fetchedMovies, queryParams: currentQueryParams }, setQueryParams] = useContext(FetchedMoviesContext);
 
-  function handleGenreChange(value: React.SetStateAction<string>) {
+  const handleGenreChange = (value: string) => {
     setSelectedGenre(value);
-    // trigger movies fetch
-  }
+    setQueryParams({ ...currentQueryParams, genre: value });
+  };
 
-  function handleSortBychange(value: React.SetStateAction<SelectValue>) {
-    setSortBy(value);
-    // trigger movies fetch
-  }
+  const handleSortBychange = (selectValue: SelectValue) => {
+    setSortBy(selectValue);
+    setQueryParams({ ...currentQueryParams, sort: selectValue.value });
+  };
+
+  const memoizedFetchMoviesNumber = useMemo(() => fetchedMovies.length, [fetchedMovies]);
 
   return (
     <>
@@ -33,7 +36,7 @@ export default function MoviesListOptionsContainer() {
         <SortPanel sortOptions={optionsToSortBy} sortByValue={sortBy} handleSelect={handleSortBychange} />
       </div>
 
-      <MoviesFound numberOfMovies={numberOfMoviesFound} />
+      <MoviesFound numberOfMovies={memoizedFetchMoviesNumber} />
     </>
   );
 }
