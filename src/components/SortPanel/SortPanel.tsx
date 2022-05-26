@@ -5,7 +5,7 @@ import { SelectValue } from '../../models/SelectValue';
 
 interface SortPanelProps {
   sortOptions: SelectValue[];
-  sortByValue: SelectValue;
+  sortByValue: SelectValue | null;
   handleSelect: (value: SelectValue) => void;
 }
 

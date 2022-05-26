@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { FetchedMoviesContext } from '../../App';
 import './SearchForm.scss';
 
 export default function SearchForm() {
   const [searchValue, setSearchValue] = useState('');
+  const [{ queryParams: currentQueryParams }, setQueryParams] = useContext(FetchedMoviesContext);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    alert('SearchValue: ' + searchValue);
-  }
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setQueryParams({
+      ...currentQueryParams,
+      searchValue,
+    });
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
-  }
+  };
 
   return (
     <div className="searchform-wrapper">

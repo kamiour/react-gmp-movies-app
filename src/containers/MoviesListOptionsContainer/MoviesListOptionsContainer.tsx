@@ -10,10 +10,10 @@ import './MoviesListOptionsContainer.scss';
 
 export default function MoviesListOptionsContainer() {
   const [genresToFilter, setGenresToFilter] = useState(genres); // add logic to get genres from server
-  const [selectedGenre, setSelectedGenre] = useState(genres[1]); // add logic to get selectedGenre from server
+  const [selectedGenre, setSelectedGenre] = useState(genres[0]); // add logic to get selectedGenre from server
 
   const [optionsToSortBy, setSortOptions] = useState(sortOptions); // add logic to get options from server
-  const [sortBy, setSortBy] = useState({ value: 'release_date', label: 'Release Date' }); // add logic to get sortBy value from server
+  const [sortBy, setSortBy] = useState<SelectValue | null>(null); // add logic to get sortBy value from server
 
   const [{ fetchedMovies, queryParams: currentQueryParams }, setQueryParams] = useContext(FetchedMoviesContext);
 
