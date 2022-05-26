@@ -19,13 +19,13 @@ export default function SearchForm() {
 
       <form className="searchform" onSubmit={handleSubmit}>
         <input
-          className="searchform-input"
+          className="searchform-input form-input"
           type="text"
           value={searchValue}
           onChange={handleChange}
           placeholder="What do you want to watch?"
         />
-        <button className="searchform-btn" type="submit" disabled={!searchValue}>
+        <button className="app-btn searchform-btn" type="submit" disabled={!searchValue}>
           Search
         </button>
       </form>

@@ -4,7 +4,6 @@ import MoviesFound from '../../components/MoviesFound/MoviesFound';
 import SortPanel from '../../components/SortPanel/SortPanel';
 import { genres } from '../../mocks/genres';
 import { sortOptions } from '../../mocks/sortOptions';
-import { Genre } from '../../models/Genre';
 import { SelectValue } from '../../models/SelectValue';
 import './MoviesListOptionsContainer.scss';
 
@@ -17,7 +16,7 @@ export default function MoviesListOptionsContainer() {
 
   const [numberOfMoviesFound, setNumberOfMoviesFound] = useState(39); // add logic to get number from server
 
-  function handleGenreChange(value: React.SetStateAction<Genre>) {
+  function handleGenreChange(value: React.SetStateAction<string>) {
     setSelectedGenre(value);
     // trigger movies fetch
   }
@@ -30,7 +29,7 @@ export default function MoviesListOptionsContainer() {
   return (
     <>
       <div className="options-panel">
-        <FilterPanel genres={genresToFilter} selectedGenreId={selectedGenre.id} handleSelect={handleGenreChange} />
+        <FilterPanel genres={genresToFilter} selectedGenre={selectedGenre} handleSelect={handleGenreChange} />
         <SortPanel sortOptions={optionsToSortBy} sortByValue={sortBy} handleSelect={handleSortBychange} />
       </div>
 
