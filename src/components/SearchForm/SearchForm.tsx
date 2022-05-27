@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useId, useState } from 'react';
 import { FetchedMoviesContext } from '../../App';
 import './SearchForm.scss';
 
 export default function SearchForm() {
   const [searchValue, setSearchValue] = useState('');
   const [{ queryParams: currentQueryParams }, setQueryParams] = useContext(FetchedMoviesContext);
+  const inputIdPrefix = useId();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,6 +26,7 @@ export default function SearchForm() {
 
       <form className="searchform" onSubmit={handleSubmit}>
         <input
+          id={`${inputIdPrefix}_searchInput`}
           className="searchform-input form-input"
           type="text"
           value={searchValue}
