@@ -9,6 +9,7 @@ import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setSelectedMovie } from '../../store/moviesReducer';
+import { handleImgOnError } from '../../utils/handleImgOnError';
 
 import './MovieCardSelected.scss';
 
@@ -39,7 +40,7 @@ function MovieCardSelected({ movie }: MovieCardSelectedProps) {
       </div>
 
       <div className="movie-card-selected-body">
-        <img className="movie-card-selected-image" alt={`${title} poster`} src={poster_path} />
+        <img className="movie-card-selected-image" alt={`${title} poster`} src={poster_path} onError={handleImgOnError} />
 
         <div className="movie-card-selected-content">
           <div className="movie-card-selected-content-header">

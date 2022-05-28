@@ -13,6 +13,7 @@ import { EditMovieFormValue } from '../../models/EditMovieFormValue';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setSelectedMovie } from '../../store/moviesReducer';
 import './MovieListCard.scss';
+import { handleImgOnError } from '../../utils/handleImgOnError';
 
 interface MoviesListCardProps {
   movie: Movie;
@@ -83,7 +84,13 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   return (
     <div className="movies-list-card">
-      <img className="movies-list-card-image" alt={`${title} poster`} src={poster_path} onClick={handleMovieSelect} />
+      <img
+        className="movies-list-card-image"
+        alt={`${title} poster`}
+        src={poster_path}
+        onClick={handleMovieSelect}
+        onError={handleImgOnError}
+      />
       <div className="movies-list-card-header">
         <span className="movies-list-card-title" onClick={handleMovieSelect}>
           {title}
