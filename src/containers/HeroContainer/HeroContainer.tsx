@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { SelectedMovieContext } from '../../App';
+import { useState } from 'react';
+
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import EditMovieForm from '../../components/EditMovieForm/EditMovieForm';
 import Header from '../../components/Header/Header';
@@ -8,10 +8,12 @@ import Logo from '../../components/Logo/Logo';
 import Modal from '../../components/Modal/Modal';
 import MovieCardSelected from '../../components/MovieCardSelected/MovieCardSelected';
 import SearchForm from '../../components/SearchForm/SearchForm';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { EditMovieFormValue } from '../../models/EditMovieFormValue';
+import { RootState } from '../../store';
 
 export default function HeroContainer() {
-  const { selectedMovie } = useContext(SelectedMovieContext);
+  const { selectedMovie } = useAppSelector((state: RootState) => state.movies);
 
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 

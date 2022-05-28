@@ -1,17 +1,18 @@
+import React, { useCallback, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './MovieListCard.scss';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+
 import Dropdown from '../Dropdown/Dropdown';
-import { useCallback, useContext, useMemo, useState } from 'react';
 import { Movie } from '../../models/Movie';
 import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
 import EditMovieForm from '../EditMovieForm/EditMovieForm';
-import { SelectedMovieContext } from '../../App';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import React from 'react';
 import { EditMovieFormValue } from '../../models/EditMovieFormValue';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { setSelectedMovie } from '../../store/moviesReducer';
+import './MovieListCard.scss';
 
 interface MoviesListCardProps {
   movie: Movie;
@@ -34,7 +35,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   const [movieToDelete, setMovieToDelete] = useState<Movie | null>(null);
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null);
 
-  const { setSelectedMovie } = useContext(SelectedMovieContext);
+  const dispatch = useAppDispatch();
 
   const handleEditClicked = useCallback(() => {
     setIsContextMenuOpen(false);
@@ -47,9 +48,9 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   }, [movie]);
 
   const handleMovieSelect = useCallback(() => {
-    setSelectedMovie(movie);
+    dispatch(setSelectedMovie(movie));
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [movie, setSelectedMovie]);
+  }, [movie, dispatch]);
 
   const handleMovieDelete = useCallback(() => {
     // delete request

@@ -1,11 +1,14 @@
 import React, { useId, useState } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { RootState } from '../../store';
 import { setSearch } from '../../store/moviesReducer';
 
 import './SearchForm.scss';
 
 export default function SearchForm() {
-  const [searchValue, setSearchValue] = useState('');
+  const { queryParams } = useAppSelector((state: RootState) => state.movies);
+  const [searchValue, setSearchValue] = useState(queryParams.search);
 
   const dispatch = useAppDispatch();
 

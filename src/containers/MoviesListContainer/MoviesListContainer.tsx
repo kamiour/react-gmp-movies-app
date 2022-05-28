@@ -13,7 +13,7 @@ export default function MoviesListContainer() {
 
   useEffect(() => {
     dispatch(fetchMovies(queryParams));
-  }, [queryParams]);
+  }, [queryParams, dispatch]);
 
   const content = isError ? (
     <h1>Fetching Error!</h1>
