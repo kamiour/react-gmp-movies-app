@@ -11,6 +11,7 @@ import { SelectedMovieContext } from '../../App';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
 import React from 'react';
+import { EditMovieFormValue } from '../../models/EditMovieFormValue';
 
 interface MoviesListCardProps {
   movie: Movie;
@@ -56,7 +57,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
     setMovieToDelete(null);
   }, [movieToDelete]);
 
-  const handleMovieEdit = useCallback((formValue: Partial<Movie>) => {
+  const handleMovieEdit = useCallback((formValue: EditMovieFormValue) => {
     // edit request
     console.log(formValue);
   }, []);

@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { Movie } from '../models/Movie';
 import { Action } from './actionCreators';
 import ACTIONS from './actionTypes';
@@ -15,19 +14,26 @@ const initialState: FetchedMoviesState = {
   isError: false,
 };
 
-const fetchedMovies = (state: FetchedMoviesState = initialState, action) => {
+const fetchedMoviesReducer = (state: FetchedMoviesState = initialState, action: Action) => {
   switch (action.type) {
     case ACTIONS.START_FETCH_MOVIES:
       return {
         ...state,
         isLoading: true,
       };
+    case ACTIONS.START_FETCH_MOVIES:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ACTIONS.START_FETCH_MOVIES:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    default:
+      return state;
   }
 };
 
-const selectedMovie = (state: Movie | null = null, { type, payload }: Action) => (type === ACTIONS.SET_SELECTED_MOVIE ? payload : state);
-
-const rootReducers = combineReducers({ fetchedMovies, selectedMovie });
-
-export { fetchedMovies, selectedMovie };
-export default rootReducers;
+export default fetchedMoviesReducer;

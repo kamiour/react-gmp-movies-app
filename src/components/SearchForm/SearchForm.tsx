@@ -3,8 +3,8 @@ import { FetchedMoviesContext } from '../../App';
 import './SearchForm.scss';
 
 export default function SearchForm() {
-  const [searchValue, setSearchValue] = useState('');
   const [{ queryParams: currentQueryParams }, setQueryParams] = useContext(FetchedMoviesContext);
+  const [searchValue, setSearchValue] = useState(currentQueryParams.search);
   const inputIdPrefix = useId();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -12,7 +12,7 @@ export default function SearchForm() {
 
     setQueryParams({
       ...currentQueryParams,
-      searchValue,
+      search: searchValue,
     });
   };
 
@@ -33,7 +33,7 @@ export default function SearchForm() {
           onChange={handleChange}
           placeholder="What do you want to watch?"
         />
-        <button className="app-btn searchform-btn" type="submit" disabled={!searchValue}>
+        <button className="app-btn searchform-btn" type="submit">
           Search
         </button>
       </form>

@@ -1,17 +1,19 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { movies } from '../mocks/movies';
 import { Movie } from '../models/Movie';
+import { QueryParams } from '../models/QueryParams';
+import { initialQueryParams } from './initialQueryParams';
 
 export type UseFetchMoviesResult = [
-  { fetchedMovies: Movie[]; isLoading: boolean; isError: boolean; queryParams: { [key: string]: string } },
-  React.Dispatch<React.SetStateAction<{ [key: string]: string }>>
+  { fetchedMovies: Movie[]; isLoading: boolean; isError: boolean; queryParams: QueryParams },
+  React.Dispatch<React.SetStateAction<QueryParams>>
 ];
 
-export const useFetchMovies = (initialData: Movie[]): UseFetchMoviesResult => {
-  const apiUrl = 'API_URL';
+export const useFetchMovies = (initialData: Movie[] = []): UseFetchMoviesResult => {
+  const apiUrl = 'http://localhost:4000/movies';
 
   const [fetchedMovies, setFetchedMovies] = useState(initialData);
-  const [queryParams, setQueryParams] = useState({}); // to react to search/sort/filter values
+  const [queryParams, setQueryParams] = useState<QueryParams>(initialQueryParams);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -22,17 +24,13 @@ export const useFetchMovies = (initialData: Movie[]): UseFetchMoviesResult => {
       setFetchedMovies([]);
 
       try {
-        console.log(queryParams);
+        const result = await axios(apiUrl, { method: 'GET', params: queryParams });
 
-        // const result = await axios(apiUrl); // will be fetching from server
-        // imitating HTTP request
-        const result = await new Promise((resolve) =>
-          setTimeout(() => {
-            resolve(movies);
-          }, 500)
-        );
+        const {
+          data: { data: fetchedMovies },
+        } = result;
 
-        setFetchedMovies(result as Movie[]);
+        setFetchedMovies(fetchedMovies as Movie[]);
       } catch (error) {
         setIsError(true);
       }

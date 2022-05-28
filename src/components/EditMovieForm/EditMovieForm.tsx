@@ -1,30 +1,32 @@
 import { BaseSyntheticEvent, useId, useState } from 'react';
-import { genres } from '../../mocks/genres';
+import { genres } from '../../containers/MoviesListOptionsContainer/genres';
+import { EditMovieFormValue } from '../../models/EditMovieFormValue';
+import { Genre } from '../../models/Genre';
 import { Movie } from '../../models/Movie';
-import { getSelectValuesFromGenres } from '../../utils/getSelectValuesFromGenres';
 import FormField from '../FormField/FormField';
 import FormSelect from '../FormSelect/FormSelect';
 import './EditMovie.scss';
 
 interface EditMovieProps {
   movie: Movie | null;
-  onSubmit: (formValue: Partial<Movie>) => void;
+  onSubmit: (formValue: EditMovieFormValue) => void;
 }
 
-const genreSelectOptions = getSelectValuesFromGenres(genres);
+const genreSelectOptions = genres;
 
 const EditMovieForm = ({ movie, onSubmit }: EditMovieProps) => {
-  const initialFormValue: Partial<Movie> = {
+  console.log(movie);
+  const initialFormValue: EditMovieFormValue = {
     title: movie?.title || '',
     release_date: movie?.release_date || '',
     poster_path: movie?.poster_path || '',
-    vote_average: movie?.vote_average,
-    runtime: movie?.runtime,
+    vote_average: movie?.vote_average || 0,
+    runtime: movie?.runtime || 0,
     overview: movie?.overview || '',
-    genres: movie?.genres || [],
+    genres: movie?.genres.map((value: string): Genre => ({ value, label: value })) || [],
   };
 
-  const [formValue, setFormValue] = useState<Partial<Movie>>(initialFormValue);
+  const [formValue, setFormValue] = useState<EditMovieFormValue>(initialFormValue);
 
   function onChange(event: BaseSyntheticEvent): void {
     setFormValue({
@@ -36,7 +38,7 @@ const EditMovieForm = ({ movie, onSubmit }: EditMovieProps) => {
   function handleGenreChange(selectedValues): void {
     setFormValue({
       ...formValue,
-      genres: selectedValues.map(({ value }) => value),
+      genres: selectedValues,
     });
   }
 
@@ -109,7 +111,7 @@ const EditMovieForm = ({ movie, onSubmit }: EditMovieProps) => {
         <FormField labelTitle="Genre:" id={getIdFor('genres')}>
           <FormSelect
             inputId={getIdFor('genres')}
-            value={getSelectValuesFromGenres(formValue.genres as string[])}
+            value={formValue.genres}
             isMulti
             options={genreSelectOptions}
             onChange={handleGenreChange}
