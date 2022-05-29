@@ -3,22 +3,17 @@ import { useMemo } from 'react';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import MoviesFound from '../../components/MoviesFound/MoviesFound';
 import SortPanel from '../../components/SortPanel/SortPanel';
-
 import { genres } from './genres';
 import { sortOptions } from './sortOptions';
-
 import { SelectValue } from '../../models/SelectValue';
 import { Genre } from '../../models/Genre';
-
-import { RootState } from '../../store';
 import { setFilter, setSortBy } from '../../store/moviesReducer';
-
-import './MoviesListOptionsContainer.scss';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
+import { useMovies } from '../../hooks/useMovies';
+import './MoviesListOptionsContainer.scss';
 
 export default function MoviesListOptionsContainer() {
-  const { fetchedMovies, queryParams } = useAppSelector((state: RootState) => state.movies);
+  const { fetchedMovies, queryParams } = useMovies();
   const dispatch = useAppDispatch();
 
   const handleGenreChange = (genre: Genre): void => {
