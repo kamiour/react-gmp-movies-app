@@ -1,8 +1,8 @@
 import { useContext, useMemo, useState } from 'react';
-import { FetchedMoviesContext } from '../../App';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import MoviesFound from '../../components/MoviesFound/MoviesFound';
 import SortPanel from '../../components/SortPanel/SortPanel';
+import { FetchedMoviesContext } from '../../contexts/FetchedMoviesContext';
 import { genres } from '../../mocks/genres';
 import { sortOptions } from '../../mocks/sortOptions';
 import { SelectValue } from '../../models/SelectValue';

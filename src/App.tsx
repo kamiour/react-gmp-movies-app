@@ -6,26 +6,17 @@ import Main from './components/Main/Main';
 import MoviesListContainer from './containers/MoviesListContainer/MoviesListContainer';
 import HeroContainer from './containers/HeroContainer/HeroContainer';
 import MoviesListOptionsContainer from './containers/MoviesListOptionsContainer/MoviesListOptionsContainer';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { Movie } from './models/Movie';
 import { useFetchMovies, UseFetchMoviesResult } from './hooks/useFetchMovies';
-
-interface SelectedMovieState {
-  selectedMovie: Movie | null;
-  setSelectedMovie: Dispatch<SetStateAction<Movie | null>>;
-}
-
-export const SelectedMovieContext = React.createContext<SelectedMovieState>({ selectedMovie: null, setSelectedMovie: () => {} });
-export const FetchedMoviesContext = React.createContext<UseFetchMoviesResult>([
-  { fetchedMovies: [], isError: false, isLoading: false, queryParams: {} },
-  () => {},
-]);
+import { FetchedMoviesContext } from './contexts/FetchedMoviesContext';
+import { SelectedMovieState, SelectedMovieContext } from './contexts/SelectedMovieContext';
 
 function App() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const selectedMovieContextValue: SelectedMovieState = { selectedMovie, setSelectedMovie };
 
-  const fetchedMoviesContextValue: UseFetchMoviesResult = useFetchMovies([]);
+  const fetchedMoviesContextValue: UseFetchMoviesResult = useFetchMovies();
 
   return (
     <div className="App">

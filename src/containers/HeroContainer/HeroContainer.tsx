@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { SelectedMovieContext } from '../../App';
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import EditMovieForm from '../../components/EditMovieForm/EditMovieForm';
 import Header from '../../components/Header/Header';
@@ -8,6 +7,7 @@ import Logo from '../../components/Logo/Logo';
 import Modal from '../../components/Modal/Modal';
 import MovieCardSelected from '../../components/MovieCardSelected/MovieCardSelected';
 import SearchForm from '../../components/SearchForm/SearchForm';
+import { SelectedMovieContext } from '../../contexts/SelectedMovieContext';
 import { Movie } from '../../models/Movie';
 
 export default function HeroContainer() {

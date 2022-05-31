@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { FetchedMoviesContext } from '../contexts/FetchedMoviesContext';
 import { movies } from '../mocks/movies';
 import { Movie } from '../models/Movie';
 
@@ -7,10 +8,10 @@ export type UseFetchMoviesResult = [
   React.Dispatch<React.SetStateAction<{ [key: string]: string }>>
 ];
 
-export const useFetchMovies = (initialData: Movie[]): UseFetchMoviesResult => {
+export const useFetchMovies = (): UseFetchMoviesResult => {
   const apiUrl = 'API_URL';
 
-  const [fetchedMovies, setFetchedMovies] = useState(initialData);
+  const [fetchedMovies, setFetchedMovies] = useState<Movie[]>([]);
   const [queryParams, setQueryParams] = useState({}); // to react to search/sort/filter values
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);

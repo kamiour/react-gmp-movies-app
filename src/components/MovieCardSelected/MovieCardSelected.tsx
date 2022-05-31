@@ -5,10 +5,10 @@ import Logo from '../Logo/Logo';
 import { transformDuration } from '../../utils/transformDuration';
 import { Movie } from '../../models/Movie';
 import { useCallback, useContext, useMemo } from 'react';
-import { SelectedMovieContext } from '../../App';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
 import React from 'react';
+import { SelectedMovieContext } from '../../contexts/SelectedMovieContext';
 
 interface MovieCardSelectedProps {
   movie: Movie;

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { FetchedMoviesContext } from '../../App';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import MoviesList from '../../components/MoviesList/MoviesList';
+import { FetchedMoviesContext } from '../../contexts/FetchedMoviesContext';
 
 export default function MoviesListContainer() {
   const [{ fetchedMovies, isError, isLoading }] = useContext(FetchedMoviesContext);
