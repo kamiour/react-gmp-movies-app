@@ -71,8 +71,8 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
     console.log(formValue);
   }, []);
 
-  const closeEditMovieModal = useCallback(() => setMovieToEdit(null), []);
-  const closeDeleteMovieModal = useCallback(() => setMovieToDelete(null), []);
+  const closeEditMovieModal = () => setMovieToEdit(null);
+  const closeDeleteMovieModal = () => setMovieToDelete(null);
 
   const memoizedYear = useMemo(() => getYear(release_date), [release_date]);
   const memoizedGenres = useMemo(() => joinGenres(genres), [genres]);
