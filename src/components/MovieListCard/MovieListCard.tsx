@@ -6,15 +6,16 @@ import Dropdown from '../Dropdown/Dropdown';
 import { Movie } from '../../models/Movie';
 import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
-import EditMovieForm from '../EditMovieForm/EditMovieForm';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
 import { EditMovieFormValue } from '../../models/EditMovieFormValue';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { deleteMovieById, fetchMovies, setSelectedMovie } from '../../store/moviesReducer';
-import './MovieListCard.scss';
 import { handleImgOnError } from '../../utils/handleImgOnError';
 import { useMovies } from '../../hooks/useMovies';
+import EditMovieFormik from '../EditMovieFormik/EditMovieFormik';
+
+import './MovieListCard.scss';
 
 interface MoviesListCardProps {
   movie: Movie;
@@ -85,7 +86,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   const editMovieModal = movieToEdit ? (
     <Modal title="Add Movie" handleClose={closeEditMovieModal}>
-      <EditMovieForm movie={movieToEdit} onSubmit={handleMovieEdit} />
+      <EditMovieFormik movie={movieToEdit} onSubmit={handleMovieEdit} />
     </Modal>
   ) : null;
 

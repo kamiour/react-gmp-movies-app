@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
-import EditMovieForm from '../../components/EditMovieForm/EditMovieForm';
+import EditMovieFormik from '../../components/EditMovieFormik/EditMovieFormik';
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
 import Logo from '../../components/Logo/Logo';
@@ -22,7 +22,7 @@ export default function HeroContainer() {
 
   const modal = shouldShowAddMovieModal ? (
     <Modal title="Add Movie" handleClose={() => setShouldShowAddMovieModal(false)}>
-      <EditMovieForm movie={null} onSubmit={handleMovieFormSubmit} />
+      <EditMovieFormik movie={null} onSubmit={handleMovieFormSubmit} />
     </Modal>
   ) : null;
 
