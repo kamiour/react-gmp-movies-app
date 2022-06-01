@@ -8,7 +8,6 @@ import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import { EditMovieFormValue } from '../../models/EditMovieFormValue';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { deleteMovieById, fetchMovies, setSelectedMovie } from '../../store/moviesReducer';
 import { handleImgOnError } from '../../utils/handleImgOnError';
@@ -67,11 +66,6 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
     }
   }, [movieToDelete, dispatch, queryParams]);
 
-  const handleMovieEdit = useCallback((formValue: EditMovieFormValue) => {
-    // edit request
-    console.log(formValue);
-  }, []);
-
   const closeEditMovieModal = () => setMovieToEdit(null);
   const closeDeleteMovieModal = () => setMovieToDelete(null);
 
@@ -86,7 +80,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   const editMovieModal = movieToEdit ? (
     <Modal title="Add Movie" handleClose={closeEditMovieModal}>
-      <EditMovieFormik movie={movieToEdit} onSubmit={handleMovieEdit} />
+      <EditMovieFormik movie={movieToEdit} handleClose={closeEditMovieModal} />
     </Modal>
   ) : null;
 

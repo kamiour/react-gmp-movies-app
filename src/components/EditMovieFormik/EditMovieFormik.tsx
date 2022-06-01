@@ -1,24 +1,28 @@
 import { useId } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
-
 import { genres } from '../../containers/MoviesListOptionsContainer/genres';
 import { EditMovieFormValue } from '../../models/EditMovieFormValue';
 import { Genre } from '../../models/Genre';
 import { Movie } from '../../models/Movie';
 import FormSelect from '../FormSelect/FormSelect';
 import TextField from '../TextField/TextField';
-
-import './EditMovie.scss';
 import { validationSchema } from './validationSchema';
+import { getMovieFromFormValue } from '../../utils/getMovieFromFormValue';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { createMovie, editMovie, fetchMovies } from '../../store/moviesReducer';
+import { useMovies } from '../../hooks/useMovies';
+import './EditMovie.scss';
 
 interface EditMovieProps {
   movie: Movie | null;
-  onSubmit: (formValue: EditMovieFormValue) => void;
+  handleClose: () => void;
 }
 
-const genreSelectOptions = genres;
+const EditMovieFormik = ({ movie, handleClose }: EditMovieProps) => {
+  const dispatch = useAppDispatch();
 
-const EditMovieFormik = ({ movie, onSubmit }: EditMovieProps) => {
+  const { queryParams } = useMovies();
+
   const initialFormValue: EditMovieFormValue = {
     title: movie?.title || '',
     release_date: movie?.release_date || '',
@@ -30,24 +34,26 @@ const EditMovieFormik = ({ movie, onSubmit }: EditMovieProps) => {
   };
 
   const inputIdPrefix = useId();
+  const getIdFor = (fieldName: string): string => `${inputIdPrefix}_${fieldName}`;
 
-  function getIdFor(fieldName: string): string {
-    return `${inputIdPrefix}_${fieldName}`;
-  }
+  const handleFormSubmit = async (formValue: EditMovieFormValue, { setSubmitting }) => {
+    const isEditing = !!movie?.id;
+
+    const formMovie: Partial<Movie> = getMovieFromFormValue(formValue);
+    const actionToDispatch = isEditing ? editMovie({ ...formMovie, id: movie.id }) : createMovie(formMovie);
+
+    try {
+      await dispatch(actionToDispatch).unwrap();
+      setSubmitting(false);
+      handleClose();
+      dispatch(fetchMovies(queryParams));
+    } catch (rejectedValueOrSerializedError) {
+      console.log(rejectedValueOrSerializedError);
+    }
+  };
 
   return (
-    <Formik
-      initialValues={initialFormValue}
-      validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 3000);
-
-        // onSubmit(values); // use this
-      }}
-    >
+    <Formik initialValues={initialFormValue} validationSchema={validationSchema} onSubmit={handleFormSubmit}>
       {({ isSubmitting }: FormikProps<EditMovieFormValue>) => (
         <Form className="edit-movie-form">
           <div className="form-fields">
@@ -55,18 +61,14 @@ const EditMovieFormik = ({ movie, onSubmit }: EditMovieProps) => {
             <TextField name="release_date" id={getIdFor('release_date')} label="Release date:" type="date" placeholder="Select Date" />
             <TextField name="poster_path" id={getIdFor('poster_path')} label="Poster Url:" type="url" placeholder="https://" />
             <TextField name="vote_average" id={getIdFor('vote_average')} label="Rating:" type="text" placeholder="7.8" />
-            <FormSelect name="genres" inputId={getIdFor('genres')} label="Genre:" isMulti options={genreSelectOptions} />
+            <FormSelect name="genres" inputId={getIdFor('genres')} label="Genre:" isMulti options={genres} />
             <TextField name="runtime" id={getIdFor('runtime')} label="Runtime:" type="text" placeholder="minutes" />
             <TextField name="overview" id={getIdFor('overview')} label="Overview:" textarea type="text" placeholder="Movie description" />
           </div>
 
           <div className="edit-movie-form-actions">
-            <button className="app-btn app-btn-reverse" type="reset">
-              Reset
-            </button>
-            <button className="app-btn" disabled={isSubmitting} type="submit">
-              Submit
-            </button>
+            <button className="app-btn app-btn-reverse" type="reset">Reset</button>
+            <button className="app-btn" disabled={isSubmitting} type="submit">Submit</button>
           </div>
         </Form>
       )}
