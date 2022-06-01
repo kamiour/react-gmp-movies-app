@@ -1,5 +1,4 @@
 import { useField } from 'formik';
-import './TextField.scss';
 
 interface TextInputProps {
   label: string;

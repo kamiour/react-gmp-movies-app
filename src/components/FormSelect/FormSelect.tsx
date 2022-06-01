@@ -5,7 +5,7 @@ import { formSelectStyles } from './formSelectStyles';
 import { SelectValue } from '../../models/SelectValue';
 
 function FormSelect({ label, ...props }: StateManagerProps & { label?: string }) {
-  const [fieldProps, , fieldHelpers] = useField(props as FieldHookConfig<any>);
+  const [fieldProps, fieldMeta, fieldHelpers] = useField(props as FieldHookConfig<any>);
 
   return (
     <div className="form-field">
@@ -19,7 +19,9 @@ function FormSelect({ label, ...props }: StateManagerProps & { label?: string })
         {...props} // to get isMulti
         {...fieldProps} // to get value
         onChange={(values: SelectValue | SelectValue[]) => fieldHelpers.setValue(values)}
+        onBlur={() => fieldHelpers.setTouched(true)}
       />
+      {fieldMeta.touched && fieldMeta.error ? <div className="form-error">{fieldMeta.error}</div> : null}
     </div>
   );
 }
