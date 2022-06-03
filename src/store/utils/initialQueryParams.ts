@@ -1,4 +1,4 @@
-import { QueryParams } from '../models/QueryParams';
+import { QueryParams } from '../../models/QueryParams';
 
 export const initialQueryParams: QueryParams = {
   sortBy: 'release_date',
