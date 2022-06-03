@@ -1,14 +1,17 @@
+import React, { useCallback, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './MovieCardSelected.scss';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import Logo from '../Logo/Logo';
 import { transformDuration } from '../../utils/transformDuration';
 import { Movie } from '../../models/Movie';
-import { useCallback, useContext, useMemo } from 'react';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import React from 'react';
-import { SelectedMovieContext } from '../../contexts/SelectedMovieContext';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { setSelectedMovie } from '../../store/moviesReducer';
+import { handleImgOnError } from '../../utils/handleImgOnError';
+
+import './MovieCardSelected.scss';
 
 interface MovieCardSelectedProps {
   movie: Movie;
@@ -16,9 +19,11 @@ interface MovieCardSelectedProps {
 
 function MovieCardSelected({ movie }: MovieCardSelectedProps) {
   const { title, poster_path, vote_average, genres, release_date, runtime, overview } = movie;
-  const { setSelectedMovie } = useContext(SelectedMovieContext);
+  const dispatch = useAppDispatch();
 
-  const handleGoToSearch = useCallback(() => setSelectedMovie(null), [setSelectedMovie]);
+  const handleGoToSearch = useCallback(() => {
+    dispatch(setSelectedMovie(null));
+  }, [dispatch]);
 
   const memoizedYear = useMemo(() => getYear(release_date), [release_date]);
   const memoizedGenres = useMemo(() => joinGenres(genres), [genres]);
@@ -35,7 +40,7 @@ function MovieCardSelected({ movie }: MovieCardSelectedProps) {
       </div>
 
       <div className="movie-card-selected-body">
-        <img className="movie-card-selected-image" alt={`${title} poster`} src={poster_path} />
+        <img className="movie-card-selected-image" alt={`${title} poster`} src={poster_path} onError={handleImgOnError} />
 
         <div className="movie-card-selected-content">
           <div className="movie-card-selected-content-header">

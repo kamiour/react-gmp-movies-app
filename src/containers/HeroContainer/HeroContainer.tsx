@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
+
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import EditMovieForm from '../../components/EditMovieForm/EditMovieForm';
 import Header from '../../components/Header/Header';
@@ -7,16 +8,15 @@ import Logo from '../../components/Logo/Logo';
 import Modal from '../../components/Modal/Modal';
 import MovieCardSelected from '../../components/MovieCardSelected/MovieCardSelected';
 import SearchForm from '../../components/SearchForm/SearchForm';
-import { SelectedMovieContext } from '../../contexts/SelectedMovieContext';
-import { Movie } from '../../models/Movie';
+import { useMovies } from '../../hooks/useMovies';
+import { EditMovieFormValue } from '../../models/EditMovieFormValue';
 
 export default function HeroContainer() {
-  // logic to get selectedMovie value
-  const { selectedMovie } = useContext(SelectedMovieContext);
+  const { selectedMovie } = useMovies();
 
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 
-  function handleMovieFormSubmit(formValue: Partial<Movie>) {
+  function handleMovieFormSubmit(formValue: EditMovieFormValue) {
     console.log(formValue);
   }
 

@@ -1,19 +1,21 @@
-import React, { useContext, useId, useState } from 'react';
-import { FetchedMoviesContext } from '../../contexts/FetchedMoviesContext';
+import React, { useId, useState } from 'react';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useMovies } from '../../hooks/useMovies';
+import { setSearch } from '../../store/moviesReducer';
+
 import './SearchForm.scss';
 
 export default function SearchForm() {
-  const [searchValue, setSearchValue] = useState('');
-  const [{ queryParams: currentQueryParams }, setQueryParams] = useContext(FetchedMoviesContext);
+  const { queryParams } = useMovies();
+  const [searchValue, setSearchValue] = useState(queryParams.search);
+
+  const dispatch = useAppDispatch();
+
   const inputIdPrefix = useId();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    setQueryParams({
-      ...currentQueryParams,
-      searchValue,
-    });
+    dispatch(setSearch(searchValue));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +35,7 @@ export default function SearchForm() {
           onChange={handleChange}
           placeholder="What do you want to watch?"
         />
-        <button className="app-btn searchform-btn" type="submit" disabled={!searchValue}>
+        <button className="app-btn searchform-btn" type="submit">
           Search
         </button>
       </form>

@@ -1,16 +1,24 @@
-import { useContext } from 'react';
+import { useEffect } from 'react';
+
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import MoviesList from '../../components/MoviesList/MoviesList';
-import { FetchedMoviesContext } from '../../contexts/FetchedMoviesContext';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useMovies } from '../../hooks/useMovies';
+import { fetchMovies } from '../../store/moviesReducer';
 
 export default function MoviesListContainer() {
-  const [{ fetchedMovies, isError, isLoading }] = useContext(FetchedMoviesContext);
+  const { movies, isLoading, isError, queryParams } = useMovies();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMovies(queryParams));
+  }, [queryParams, dispatch]);
 
   const content = isError ? (
     <h1>Fetching Error!</h1>
   ) : (
     <ErrorBoundary componentName="MoviesListContainer">
-      <MoviesList movies={fetchedMovies}></MoviesList>
+      <MoviesList movies={movies}></MoviesList>
     </ErrorBoundary>
   );
 

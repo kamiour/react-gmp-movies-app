@@ -1,16 +1,20 @@
+import React, { useCallback, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './MovieListCard.scss';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+
 import Dropdown from '../Dropdown/Dropdown';
-import { useCallback, useContext, useMemo, useState } from 'react';
 import { Movie } from '../../models/Movie';
 import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
 import EditMovieForm from '../EditMovieForm/EditMovieForm';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import React from 'react';
-import { SelectedMovieContext } from '../../contexts/SelectedMovieContext';
+import { EditMovieFormValue } from '../../models/EditMovieFormValue';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { deleteMovieById, fetchMovies, setSelectedMovie } from '../../store/moviesReducer';
+import './MovieListCard.scss';
+import { handleImgOnError } from '../../utils/handleImgOnError';
+import { useMovies } from '../../hooks/useMovies';
 
 interface MoviesListCardProps {
   movie: Movie;
@@ -33,7 +37,8 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   const [movieToDelete, setMovieToDelete] = useState<Movie | null>(null);
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null);
 
-  const { setSelectedMovie } = useContext(SelectedMovieContext);
+  const { queryParams } = useMovies();
+  const dispatch = useAppDispatch();
 
   const handleEditClicked = useCallback(() => {
     setIsContextMenuOpen(false);
@@ -46,17 +51,22 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   }, [movie]);
 
   const handleMovieSelect = useCallback(() => {
-    setSelectedMovie(movie);
+    dispatch(setSelectedMovie(movie));
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [movie, setSelectedMovie]);
+  }, [movie, dispatch]);
 
-  const handleMovieDelete = useCallback(() => {
-    // delete request
-    alert('Delete movie: ' + movieToDelete!.id);
-    setMovieToDelete(null);
-  }, [movieToDelete]);
+  const handleMovieDelete = useCallback(async () => {
+    try {
+      await dispatch(deleteMovieById(movieToDelete!.id)).unwrap();
 
-  const handleMovieEdit = useCallback((formValue: Partial<Movie>) => {
+      setMovieToDelete(null);
+      dispatch(fetchMovies(queryParams));
+    } catch (rejectedValueOrSerializedError) {
+      console.log(rejectedValueOrSerializedError);
+    }
+  }, [movieToDelete, dispatch, queryParams]);
+
+  const handleMovieEdit = useCallback((formValue: EditMovieFormValue) => {
     // edit request
     console.log(formValue);
   }, []);
@@ -81,7 +91,13 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   return (
     <div className="movies-list-card">
-      <img className="movies-list-card-image" alt={`${title} poster`} src={poster_path} onClick={handleMovieSelect} />
+      <img
+        className="movies-list-card-image"
+        alt={`${title} poster`}
+        src={poster_path}
+        onClick={handleMovieSelect}
+        onError={handleImgOnError}
+      />
       <div className="movies-list-card-header">
         <span className="movies-list-card-title" onClick={handleMovieSelect}>
           {title}
