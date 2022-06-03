@@ -13,7 +13,7 @@ import { useMovies } from '../../hooks/useMovies';
 import './MoviesListOptionsContainer.scss';
 
 export default function MoviesListOptionsContainer() {
-  const { fetchedMovies, queryParams } = useMovies();
+  const { movies, queryParams } = useMovies();
   const dispatch = useAppDispatch();
 
   const handleGenreChange = (genre: Genre): void => {
@@ -28,7 +28,7 @@ export default function MoviesListOptionsContainer() {
     return sortOptions.find((option) => option.value === value)!;
   };
 
-  const memoizedFetchMoviesNumber = useMemo(() => fetchedMovies.length, [fetchedMovies]);
+  const memoizedFetchMoviesNumber = useMemo(() => movies.length, [movies]);
 
   return (
     <>
