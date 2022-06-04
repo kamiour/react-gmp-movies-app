@@ -29,24 +29,6 @@ const moviesSlice = createSlice({
   name: 'tookit/moviesReducer',
   initialState: initialState,
   reducers: {
-    setSortBy: (state: FetchedMoviesState, action: PayloadAction<string>) => {
-      state.queryParams = {
-        ...state.queryParams,
-        sortBy: action.payload,
-      };
-    },
-    setFilter: (state: FetchedMoviesState, action: PayloadAction<string>) => {
-      state.queryParams = {
-        ...state.queryParams,
-        filter: action.payload,
-      };
-    },
-    setSearch: (state: FetchedMoviesState, action: PayloadAction<string>) => {
-      state.queryParams = {
-        ...state.queryParams,
-        search: action.payload,
-      };
-    },
     setSelectedMovie: (state: FetchedMoviesState, action: PayloadAction<Movie | null>) => {
       state.selectedMovie = action.payload;
     },
@@ -70,5 +52,5 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { setSortBy, setFilter, setSearch, setSelectedMovie } = moviesSlice.actions;
+export const { setSelectedMovie } = moviesSlice.actions;
 export default moviesSlice.reducer;
