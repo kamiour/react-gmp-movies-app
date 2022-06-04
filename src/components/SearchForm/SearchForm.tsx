@@ -34,9 +34,8 @@ export default function SearchForm() {
             type="text"
             placeholder="What do you want to watch?"
           />
-          <button className="app-btn searchform-btn" type="submit">
-            Search
-          </button>
+
+          <button className="app-btn searchform-btn" type="submit">Search</button>
         </Form>
       </Formik>
     </div>

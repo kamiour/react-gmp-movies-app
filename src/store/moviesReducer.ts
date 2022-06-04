@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { initialQueryParams } from './utils/initialQueryParams';
 import { Movie } from '../models/Movie';
-import { QueryParams } from '../models/QueryParams';
 import { MoviesApiService } from './moviesApiService';
 
 interface FetchedMoviesState {
   movies: Movie[];
   isLoading: boolean;
   isError: boolean;
-  queryParams: QueryParams;
   selectedMovie: Movie | null;
 }
 
@@ -16,7 +13,6 @@ const initialState: FetchedMoviesState = {
   movies: [],
   isLoading: false,
   isError: false,
-  queryParams: initialQueryParams,
   selectedMovie: null,
 };
 
@@ -46,9 +42,6 @@ const moviesSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
     });
-    builder.addCase(deleteMovieById.fulfilled, (state: FetchedMoviesState) => ({
-      ...state,
-    }));
   },
 });
 

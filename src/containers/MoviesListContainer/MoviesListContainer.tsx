@@ -1,31 +1,19 @@
 import { useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import MoviesList from '../../components/MoviesList/MoviesList';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useMovies } from '../../hooks/useMovies';
+import { useQueryParams } from '../../hooks/useQueryParams';
 import { fetchMovies } from '../../store/moviesReducer';
-import { initialQueryParams } from '../../store/utils/initialQueryParams';
 
 export default function MoviesListContainer() {
-  const { movies, isLoading, isError } = useMovies();
   const dispatch = useAppDispatch();
-
-  const { searchQuery } = useParams();
-  const [searchParams] = useSearchParams();
-  const sortBy = searchParams.get('sortBy') ?? null;
-  const filter = searchParams.get('genre') ?? null;
+  const { movies, isLoading, isError } = useMovies();
+  const routerQueryParams = useQueryParams();
 
   useEffect(() => {
-    dispatch(
-      fetchMovies({
-        ...initialQueryParams,
-        sortBy,
-        search: searchQuery ?? null,
-        filter,
-      })
-    );
-  }, [searchQuery, sortBy, filter, dispatch]);
+    dispatch(fetchMovies(routerQueryParams));
+  }, [routerQueryParams, dispatch]);
 
   const content = isError ? (
     <h1>Fetching Error!</h1>
