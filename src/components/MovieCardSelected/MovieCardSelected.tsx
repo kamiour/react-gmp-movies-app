@@ -7,11 +7,10 @@ import { transformDuration } from '../../utils/transformDuration';
 import { Movie } from '../../models/Movie';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setSelectedMovie } from '../../store/moviesReducer';
 import { handleImgOnError } from '../../utils/handleImgOnError';
 
 import './MovieCardSelected.scss';
+import { useSearchParams } from 'react-router-dom';
 
 interface MovieCardSelectedProps {
   movie: Movie;
@@ -19,11 +18,12 @@ interface MovieCardSelectedProps {
 
 function MovieCardSelected({ movie }: MovieCardSelectedProps) {
   const { title, poster_path, vote_average, genres, release_date, runtime, overview } = movie;
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleGoToSearch = useCallback(() => {
-    dispatch(setSelectedMovie(null));
-  }, [dispatch]);
+    searchParams.delete('movie');
+    setSearchParams(searchParams);
+  }, [searchParams, setSearchParams]);
 
   const memoizedYear = useMemo(() => getYear(release_date), [release_date]);
   const memoizedGenres = useMemo(() => joinGenres(genres), [genres]);
