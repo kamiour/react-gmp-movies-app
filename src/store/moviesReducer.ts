@@ -6,14 +6,12 @@ interface FetchedMoviesState {
   movies: Movie[];
   isLoading: boolean;
   isError: boolean;
-  selectedMovie: Movie | null;
 }
 
 const initialState: FetchedMoviesState = {
   movies: [],
   isLoading: false,
   isError: false,
-  selectedMovie: null,
 };
 
 export const fetchMovies = createAsyncThunk('toolkit/moviesReducer/fetchMovies', MoviesApiService.fetchMovies);
@@ -25,11 +23,7 @@ export const fetchMovieById = createAsyncThunk('toolkit/moviesReducer/fetchMovie
 const moviesSlice = createSlice({
   name: 'tookit/moviesReducer',
   initialState: initialState,
-  reducers: {
-    setSelectedMovie: (state: FetchedMoviesState, action: PayloadAction<Movie | null>) => {
-      state.selectedMovie = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchMovies.pending, (state: FetchedMoviesState) => {
       state.isError = false;
@@ -46,5 +40,4 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { setSelectedMovie } = moviesSlice.actions;
 export default moviesSlice.reducer;
