@@ -19,10 +19,11 @@ const selectedMovieSlice = createSlice({
   name: 'tookit/moviesReducer',
   initialState: initialState,
   reducers: {
-    resetSelectedMovie: (state: SelectedMovieState) => initialState,
+    resetSelectedMovie: () => initialState,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMovieById.pending, (state: SelectedMovieState) => {
+      state.movie = null;
       state.isError = false;
       state.isLoading = true;
     });
