@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useSearchParams } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import { Movie } from '../../models/Movie';
-import { useSearchParams } from 'react-router-dom';
 import MovieCardSelected from '../MovieCardSelected/MovieCardSelected';
 import './MovieCardSelectedContainer.scss';
 
