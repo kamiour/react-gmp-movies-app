@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import EditMovieFormik from '../../components/EditMovieFormik/EditMovieFormik';
@@ -6,11 +6,11 @@ import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
 import Logo from '../../components/Logo/Logo';
 import Modal from '../../components/Modal/Modal';
-import MovieCardSelected from '../../components/MovieCardSelected/MovieCardSelected';
+import MovieCardSelectedContainer from '../../components/MovieCardSelectedContainer/MovieCardSelectedContainer';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { Movie } from '../../models/Movie';
-import { fetchMovieById } from '../../store/moviesReducer';
+import { useSelectedMovie } from '../../hooks/useSelectedMovie';
+import { fetchMovieById, resetSelectedMovie } from '../../store/selectedMovieReducer';
 
 export default function HeroContainer() {
   const dispatch = useAppDispatch();
@@ -18,25 +18,15 @@ export default function HeroContainer() {
   const [searchParams] = useSearchParams();
   const selectedMovieId = searchParams.get('movie');
 
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-
-  const fetchMovie = useCallback(async () => {
-    try {
-      if (!selectedMovieId) {
-        setSelectedMovie(null);
-        return;
-      }
-
-      const movie = await dispatch(fetchMovieById(selectedMovieId)).unwrap();
-      setSelectedMovie(movie);
-    } catch (rejectedValueOrSerializedError) {
-      console.log(rejectedValueOrSerializedError);
-    }
-  }, [selectedMovieId, dispatch]);
+  const { movie: selectedMovie, isLoading: isSelectedMovieLoading, isError: isSelectedMovieError } = useSelectedMovie();
 
   useEffect(() => {
-    fetchMovie();
-  }, [selectedMovieId, fetchMovie]);
+    if (selectedMovieId) {
+      dispatch(fetchMovieById(selectedMovieId));
+    } else {
+      dispatch(resetSelectedMovie());
+    }
+  }, [selectedMovieId, dispatch]);
 
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 
@@ -48,7 +38,9 @@ export default function HeroContainer() {
     </Modal>
   ) : null;
 
-  const heroElement = !selectedMovie ? (
+  const shouldDisplaySelectedMovieCard = selectedMovie || isSelectedMovieLoading || isSelectedMovieError;
+
+  const heroElement = !shouldDisplaySelectedMovieCard ? (
     <Hero>
       <Header>
         <Logo />
@@ -60,7 +52,7 @@ export default function HeroContainer() {
       {modal}
     </Hero>
   ) : (
-    <MovieCardSelected movie={selectedMovie} />
+    <MovieCardSelectedContainer movie={selectedMovie} isLoading={isSelectedMovieLoading} isError={isSelectedMovieError} />
   );
 
   return heroElement;
