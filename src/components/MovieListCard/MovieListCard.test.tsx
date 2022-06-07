@@ -36,7 +36,7 @@ describe('MoviesListCard', () => {
 
     userEvent.click(contextMenuBtn);
 
-    const dropdown = getByRole('dropdown');
+    const dropdown = getByRole('menu');
     expect(dropdown).toBeInTheDocument();
   });
 
@@ -48,7 +48,7 @@ describe('MoviesListCard', () => {
 
     userEvent.click(contextMenuBtn);
 
-    const dropdown = getByRole('dropdown');
+    const dropdown = getByRole('menu');
     expect(dropdown).toBeInTheDocument();
 
     const editOption = getByText('Edit');
@@ -68,7 +68,7 @@ describe('MoviesListCard', () => {
 
     userEvent.click(contextMenuBtn);
 
-    const dropdown = getByRole('dropdown');
+    const dropdown = getByRole('menu');
     expect(dropdown).toBeInTheDocument();
 
     const deleteOption = getByText('Delete');
