@@ -63,7 +63,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   ) : null;
 
   const editMovieModal = movieToEdit ? (
-    <Modal title="Add Movie" handleClose={closeEditMovieModal}>
+    <Modal title="Edit Movie" handleClose={closeEditMovieModal}>
       <EditMovieFormik movie={movieToEdit} handleClose={closeEditMovieModal} />
     </Modal>
   ) : null;
@@ -86,7 +86,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
       <div className="movies-list-card-genres">
         <span>{memoizedGenres}</span>
       </div>
-      <button onClick={() => setIsContextMenuOpen(true)} className="context-menu-btn">
+      <button title="context-menu-button" onClick={() => setIsContextMenuOpen(true)} className="context-menu-btn">
         <FontAwesomeIcon icon={faEllipsisVertical} />
       </button>
       <div className="movies-list-card-dropdown-wrapper">

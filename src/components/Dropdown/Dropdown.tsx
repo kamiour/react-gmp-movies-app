@@ -10,7 +10,7 @@ interface DropdownConfig {
 
 function Dropdown({ items, handleSelect, handleClose }: DropdownConfig) {
   return (
-    <div className="dropdown">
+    <div className="dropdown" role="dropdown">
       <ul>
         {items.map((item) => (
           <li key={item.id} className="dropdown-item" onClick={() => handleSelect(item.id)}>

@@ -13,6 +13,10 @@ jest.mock('../../components/Modal/Modal', () => {
   return () => <div>Mocked Modal</div>;
 });
 
+jest.mock('../../components/EditMovieFormik/EditMovieFormik', () => {
+  return () => <div>Mocked Edit Movie Form</div>;
+});
+
 jest.mock('../../components/MovieCardSelectedContainer/MovieCardSelectedContainer', () => {
   return () => <div>Mocked Selected Movie Container</div>;
 });
@@ -29,6 +33,10 @@ describe('HeroContainer', () => {
       isError: false,
       isLoading: false,
     },
+  });
+
+  beforeEach(() => {
+    jest.spyOn(store, 'dispatch').mockImplementation();
   });
 
   it('should display search form when there is no selected movie in store', () => {

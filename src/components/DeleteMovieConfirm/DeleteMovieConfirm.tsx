@@ -23,7 +23,7 @@ const DeleteMovieConfirm = ({ movieId, handleClose }: DeleteMovieProps) => {
       handleClose();
       dispatch(fetchMovies(routerQueryParams));
     } catch (rejectedValueOrSerializedError) {
-      console.log(rejectedValueOrSerializedError);
+      // console.log(rejectedValueOrSerializedError);
     }
   };
 
