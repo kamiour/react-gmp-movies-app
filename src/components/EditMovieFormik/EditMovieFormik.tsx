@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Formik, Form, FormikProps } from 'formik';
+import { Formik, Form, FormikProps, FormikHelpers } from 'formik';
 import { genres } from '../../containers/MoviesListOptionsContainer/genres';
 import { EditMovieFormValue } from '../../models/EditMovieFormValue';
 import { Genre } from '../../models/Genre';
@@ -11,6 +11,7 @@ import { getMovieFromFormValue } from '../../utils/getMovieFromFormValue';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { createMovie, editMovie, fetchMovies } from '../../store/moviesReducer';
 import { useMovies } from '../../hooks/useMovies';
+import { AsyncSubmitStatus } from '../../models/AsyncSubmitStatus';
 import './EditMovie.scss';
 
 interface EditMovieProps {
@@ -36,7 +37,7 @@ const EditMovieFormik = ({ movie, handleClose }: EditMovieProps) => {
   const inputIdPrefix = useId();
   const getIdFor = (fieldName: string): string => `${inputIdPrefix}_${fieldName}`;
 
-  const handleFormSubmit = async (formValue: EditMovieFormValue, { setSubmitting }) => {
+  const handleFormSubmit = async (formValue: EditMovieFormValue, { setSubmitting, setStatus }: FormikHelpers<EditMovieFormValue>) => {
     const isEditing = !!movie?.id;
 
     const formMovie: Partial<Movie> = getMovieFromFormValue(formValue);
@@ -44,18 +45,22 @@ const EditMovieFormik = ({ movie, handleClose }: EditMovieProps) => {
 
     try {
       await dispatch(actionToDispatch).unwrap();
-      setSubmitting(false);
-      handleClose();
       dispatch(fetchMovies(queryParams));
+      handleClose();
+      setStatus(AsyncSubmitStatus.SUBMIT_SUCCESS);
     } catch (rejectedValueOrSerializedError) {
-      console.log(rejectedValueOrSerializedError);
+      setStatus(AsyncSubmitStatus.SUBMIT_FAIL);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
     <Formik initialValues={initialFormValue} validationSchema={validationSchema} onSubmit={handleFormSubmit}>
-      {({ isSubmitting }: FormikProps<EditMovieFormValue>) => (
+      {({ isSubmitting, status }: FormikProps<EditMovieFormValue>) => (
         <Form className="edit-movie-form">
+          {status === AsyncSubmitStatus.SUBMIT_FAIL && <p className="form-error">Submit failed. Please try again.</p>}
+          
           <div className="form-fields">
             <TextField name="title" id={getIdFor('title')} label="Title:" type="text" placeholder="Title" />
             <TextField name="release_date" id={getIdFor('release_date')} label="Release date:" type="date" placeholder="Select Date" />
