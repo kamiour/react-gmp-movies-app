@@ -8,7 +8,7 @@ import { sortOptions } from './sortOptions';
 import { SelectValue } from '../../models/SelectValue';
 import { Genre } from '../../models/Genre';
 import { useMovies } from '../../hooks/useMovies';
-import './MoviesListOptionsContainer.scss';
+// import './MoviesListOptionsContainer.scss';
 
 export default function MoviesListOptionsContainer() {
   const { movies } = useMovies();

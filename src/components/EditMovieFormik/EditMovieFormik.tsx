@@ -12,7 +12,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { createMovie, editMovie, fetchMovies } from '../../store/moviesReducer';
 import { useQueryParams } from '../../hooks/useQueryParams';
 import { AsyncSubmitStatus } from '../../models/AsyncSubmitStatus';
-import './EditMovie.scss';
+// import './EditMovie.scss';
 
 interface EditMovieProps {
   movie: Movie | null;

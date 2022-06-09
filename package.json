@@ -21,6 +21,7 @@
     "@types/react-redux": "^7.1.24",
     "axios": "^0.27.2",
     "formik": "^2.2.9",
+    "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",
@@ -33,14 +34,10 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
-    "test:watch": "react-scripts test",
-    "test:coverage": "react-scripts test --watchAll=false --coverage",
-    "test:clearCache": "react-scripts test --clearCache",
-    "test:e2e": "cypress open",
-    "eject": "react-scripts eject"
+    "start:dev": "next dev",
+    "build:prod": "next build",
+    "start:prod": "next start",
+    "test:e2e": "cypress open"
   },
   "eslintConfig": {
     "extends": [

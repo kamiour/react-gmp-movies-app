@@ -1,7 +1,7 @@
-import './SortPanel.scss';
 import Select from 'react-select';
 import { sortSelectStyles } from './sortSelectStyles';
 import { SelectValue } from '../../models/SelectValue';
+// import './SortPanel.scss';
 
 interface SortPanelProps {
   sortOptions: SelectValue[];
@@ -12,10 +12,18 @@ interface SortPanelProps {
 const customStyles = sortSelectStyles;
 
 export default function SortPanel({ sortOptions, sortByValue, handleSelect }: SortPanelProps) {
+  const selectId = 'sort-select';
+
   return (
     <div className="sort-panel">
       <span className="sort-panel-label">Sort by</span>
-      <Select value={sortByValue} options={sortOptions} styles={customStyles} onChange={(value) => handleSelect(value as SelectValue)} />
+      <Select
+        value={sortByValue}
+        options={sortOptions}
+        styles={customStyles}
+        onChange={(value) => handleSelect(value as SelectValue)}
+        instanceId={selectId}
+      />
     </div>
   );
 }

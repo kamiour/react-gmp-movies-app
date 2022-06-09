@@ -10,7 +10,7 @@ import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
 import { handleImgOnError } from '../../utils/handleImgOnError';
 import EditMovieFormik from '../EditMovieFormik/EditMovieFormik';
-import './MovieListCard.scss';
+// import './MovieListCard.scss';
 
 interface MoviesListCardProps {
   movie: Movie;

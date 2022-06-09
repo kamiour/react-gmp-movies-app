@@ -3,7 +3,6 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useQueryParams } from '../../hooks/useQueryParams';
 import { AsyncSubmitStatus } from '../../models/AsyncSubmitStatus';
 import { deleteMovieById, fetchMovies } from '../../store/moviesReducer';
-import './DeleteMovieConfirm.scss';
 
 interface DeleteMovieFormValue {
   movieId: number;
