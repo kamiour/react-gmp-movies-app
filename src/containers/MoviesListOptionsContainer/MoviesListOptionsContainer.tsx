@@ -20,7 +20,6 @@ export default function MoviesListOptionsContainer() {
 
   const handleQueryParamChange = (selectedItem: SelectValue | Genre, paramName: 'genre' | 'sortBy'): void => {
     const selectedValue: string = selectedItem.value;
-    console.log(selectedValue);
 
     if (selectedValue) {
       router.query[paramName] = selectedValue;
@@ -28,7 +27,14 @@ export default function MoviesListOptionsContainer() {
       delete router.query[paramName];
     }
 
-    router.push(router);
+    router.push(
+      {
+        pathname: router.pathname,
+        query: router.query,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   const getSortByValue = (value: string | null): SelectValue | null => {

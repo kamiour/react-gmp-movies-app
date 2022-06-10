@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { wrapper } from '../src/store';
 import '../src/index.scss';
 import '../src/App.scss';
 import '../src/components/Logo/Logo.scss';
@@ -23,10 +24,7 @@ import '../src/components/MoviesList/MoviesList.scss';
 import '../src/components/SortPanel/SortPanel.scss';
 import '../src/containers/MoviesListOptionsContainer/MoviesListOptionsContainer.scss';
 import '../src/components/PageNotFound/PageNotFound.scss';
-import { wrapper } from '../src/store';
-import React from 'react';
 
-// TODO: remove MemoryRouter after router is rewritten
 function MyApp({ Component, pageProps }) {
   return (
     <>
@@ -35,11 +33,9 @@ function MyApp({ Component, pageProps }) {
         <title>Movie App</title>
       </Head>
 
-      <React.StrictMode>
-        <div className="App">
-          <Component {...pageProps} />
-        </div>
-      </React.StrictMode>
+      <div className="App">
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }

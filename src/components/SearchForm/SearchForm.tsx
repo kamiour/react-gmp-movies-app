@@ -17,7 +17,15 @@ export default function SearchForm() {
       router.pathname = '/search';
       delete router.query.search;
     }
-    router.push(router);
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query: router.query,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   return (
