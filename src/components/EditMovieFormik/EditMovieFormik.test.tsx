@@ -27,6 +27,10 @@ describe('EditMovieFormik', () => {
     }));
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render empty form when no movie is provided', () => {
     const { getByPlaceholderText } = renderEdieMovieFormikInProviderAndRouter(null);
     const titleInput = getByPlaceholderText('Title');
