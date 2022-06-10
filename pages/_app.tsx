@@ -33,6 +33,7 @@ function MyApp({ Component, pageProps }) {
         <title>Movie App</title>
       </Head>
 
+      <div id="modal-container"></div>
       <div className="App">
         <Component {...pageProps} />
       </div>

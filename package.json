@@ -37,6 +37,10 @@
     "start:dev": "next dev",
     "build:prod": "next build",
     "start:prod": "next start",
+    "test": "react-scripts test --watchAll=false",
+    "test:watch": "react-scripts test",
+    "test:coverage": "react-scripts test --watchAll=false --coverage",
+    "test:clearCache": "react-scripts test --clearCache",
     "test:e2e": "cypress open"
   },
   "eslintConfig": {
