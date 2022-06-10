@@ -1,18 +1,15 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-
+import { useSearchParams } from 'react-router-dom';
 import Dropdown from '../Dropdown/Dropdown';
 import { Movie } from '../../models/Movie';
 import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setSelectedMovie } from '../../store/moviesReducer';
 import { handleImgOnError } from '../../utils/handleImgOnError';
 import EditMovieFormik from '../EditMovieFormik/EditMovieFormik';
-
 import './MovieListCard.scss';
 
 interface MoviesListCardProps {
@@ -35,8 +32,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState<Movie | null>(null);
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null);
-
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleEditClicked = useCallback(() => {
     setIsContextMenuOpen(false);
@@ -49,9 +45,10 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   }, [movie]);
 
   const handleMovieSelect = useCallback(() => {
-    dispatch(setSelectedMovie(movie));
+    searchParams.set('movie', movie.id.toString());
+    setSearchParams(searchParams);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [movie, dispatch]);
+  }, [movie.id, searchParams, setSearchParams]);
 
   const closeEditMovieModal = () => setMovieToEdit(null);
   const closeDeleteMovieModal = () => setMovieToDelete(null);

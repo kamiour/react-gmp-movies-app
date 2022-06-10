@@ -13,9 +13,11 @@ const TextField = ({ label, textarea, ...props }: TextInputProps) => {
 
   return (
     <div className="form-field">
-      <label htmlFor={props.id || props.name} className="form-label">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={props.id || props.name} className="form-label">
+          {label}
+        </label>
+      )}
 
       {!textarea ? (
         <input className="form-input" {...fieldProps} {...props} />

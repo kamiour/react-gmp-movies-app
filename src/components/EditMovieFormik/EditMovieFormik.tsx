@@ -10,7 +10,7 @@ import { validationSchema } from './validationSchema';
 import { getMovieFromFormValue } from '../../utils/getMovieFromFormValue';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { createMovie, editMovie, fetchMovies } from '../../store/moviesReducer';
-import { useMovies } from '../../hooks/useMovies';
+import { useQueryParams } from '../../hooks/useQueryParams';
 import { AsyncSubmitStatus } from '../../models/AsyncSubmitStatus';
 import './EditMovie.scss';
 
@@ -21,8 +21,7 @@ interface EditMovieProps {
 
 const EditMovieFormik = ({ movie, handleClose }: EditMovieProps) => {
   const dispatch = useAppDispatch();
-
-  const { queryParams } = useMovies();
+  const routerQueryParams = useQueryParams();
 
   const initialFormValue: EditMovieFormValue = {
     title: movie?.title || '',
@@ -45,7 +44,7 @@ const EditMovieFormik = ({ movie, handleClose }: EditMovieProps) => {
 
     try {
       await dispatch(actionToDispatch).unwrap();
-      dispatch(fetchMovies(queryParams));
+      dispatch(fetchMovies(routerQueryParams));
       handleClose();
       setStatus(AsyncSubmitStatus.SUBMIT_SUCCESS);
     } catch (rejectedValueOrSerializedError) {
