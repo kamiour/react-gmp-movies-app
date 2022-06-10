@@ -22,17 +22,12 @@ import '../src/components/MoviesFound/MoviesFound.scss';
 import '../src/components/MoviesList/MoviesList.scss';
 import '../src/components/SortPanel/SortPanel.scss';
 import '../src/containers/MoviesListOptionsContainer/MoviesListOptionsContainer.scss';
-import App, { AppContext } from 'next/app';
-import { initialiseStore } from '../src/store/index';
-import { setupListeners } from '@reduxjs/toolkit/dist/query';
-import { fetchMovies } from '../src/store/moviesReducer';
-import { MoviesApiService } from '../src/store/moviesApiService';
-import { Provider } from 'react-redux';
+import '../src/components/PageNotFound/PageNotFound.scss';
+import { wrapper } from '../src/store';
+import React from 'react';
 
+// TODO: remove MemoryRouter after router is rewritten
 function MyApp({ Component, pageProps }) {
-  console.log('HERE!!');
-  console.log(pageProps.initialState.movies.movies.length);
-  const store = initialiseStore(pageProps.initialState);
   return (
     <>
       <Head>
@@ -40,31 +35,13 @@ function MyApp({ Component, pageProps }) {
         <title>Movie App</title>
       </Head>
 
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
+      <React.StrictMode>
+        <div className="App">
+          <Component {...pageProps} />
+        </div>
+      </React.StrictMode>
     </>
   );
 }
 
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await App.getInitialProps(appContext);
-  //initialise redux store on server side
-  const reduxStore = initialiseStore({});
-  console.log(reduxStore.getState());
-  // setupListeners(reduxStore.dispatch);
-  const { dispatch } = reduxStore;
-  const res = await dispatch(fetchMovies());
-
-  // dispatch(setStars({ stars: json.stars }));
-
-  appProps.pageProps = {
-    ...appProps.pageProps,
-    initialState: reduxStore.getState(),
-  };
-
-  return appProps;
-};
-
-export default MyApp;
-
+export default wrapper.withRedux(MyApp);

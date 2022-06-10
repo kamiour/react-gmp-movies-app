@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { useSearchParams } from 'react-router-dom';
 import Dropdown from '../Dropdown/Dropdown';
 import { Movie } from '../../models/Movie';
 import Modal from '../Modal/Modal';
@@ -32,7 +32,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState<Movie | null>(null);
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter();
 
   const handleEditClicked = useCallback(() => {
     setIsContextMenuOpen(false);
@@ -45,10 +45,9 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   }, [movie]);
 
   const handleMovieSelect = useCallback(() => {
-    searchParams.set('movie', movie.id.toString());
-    setSearchParams(searchParams);
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [movie.id, searchParams, setSearchParams]);
+    router.query.movie = movie.id.toString();
+    router.push(router);
+  }, [movie.id]);
 
   const closeEditMovieModal = () => setMovieToEdit(null);
   const closeDeleteMovieModal = () => setMovieToDelete(null);

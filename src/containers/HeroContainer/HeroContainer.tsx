@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import EditMovieFormik from '../../components/EditMovieFormik/EditMovieFormik';
 import Header from '../../components/Header/Header';
@@ -14,19 +14,19 @@ import { fetchMovieById, resetSelectedMovie } from '../../store/selectedMovieRed
 
 export default function HeroContainer() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const [searchParams] = useSearchParams();
-  const selectedMovieId = searchParams.get('movie');
+  const { movie: selectedMovieId } = router.query;
 
   const { movie: selectedMovie, isLoading: isSelectedMovieLoading, isError: isSelectedMovieError } = useSelectedMovie();
 
-  useEffect(() => {
-    if (selectedMovieId) {
-      dispatch(fetchMovieById(selectedMovieId));
-    } else {
-      dispatch(resetSelectedMovie());
-    }
-  }, [selectedMovieId, dispatch]);
+  // useEffect(() => {
+  //   if (selectedMovieId) {
+  //     dispatch(fetchMovieById(selectedMovieId));
+  //   } else {
+  //     dispatch(resetSelectedMovie());
+  //   }
+  // }, [selectedMovieId, dispatch]);
 
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 

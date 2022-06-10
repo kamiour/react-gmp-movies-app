@@ -1,38 +1,43 @@
-import { configureStore } from '@reduxjs/toolkit';
-import moviesReducer from './moviesReducer';
-import selectedMovieReducer from './selectedMovieReducer';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import moviesReducer, { FetchedMoviesState } from './moviesReducer';
+import selectedMovieReducer, { SelectedMovieState } from './selectedMovieReducer';
 
-export const createStore = (preloadedState) => {
+export interface RootState {
+  movies: FetchedMoviesState;
+  selectedMovie: SelectedMovieState;
+}
+
+const combinedReducer = combineReducers({
+  movies: moviesReducer,
+  selectedMovie: selectedMovieReducer,
+});
+
+const masterReducer = (state: RootState | undefined, action: { type: typeof HYDRATE; payload: RootState }) => {
+  // used to set state from server (SSR) to client
+  if (action.type === HYDRATE) {
+    return {
+      ...state, // use previous state
+      movies: action.payload.movies,
+      selectedMovie: action.payload.selectedMovie,
+    };
+  }
+
+  return combinedReducer(state, action);
+};
+
+export const createStore = () => {
   return configureStore({
-    reducer: {
-      movies: moviesReducer,
-      selectedMovie: selectedMovieReducer,
-    },
-    preloadedState,
+    reducer: masterReducer,
   });
 };
 
-let store;
-export const initialiseStore = (preloadedState) => {
-  let _store = store ?? createStore(preloadedState);
+// just to get AppDispatch type;
+// TODO: remove if not needed
+const dummyStore = configureStore({
+  reducer: masterReducer,
+});
 
-  if (preloadedState && store) {
-    console.log('AND HERE');
-    console.log(store.getState);
-    _store = createStore({ ...store.getState(), ...preloadedState });
-    store = undefined;
-  }
-
-  // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') return _store;
-
-  // Create the store once in the client
-  if (!store) store = _store;
-
-  return _store;
-};
-
-// const dummyStore = initialiseStore({}); // required for types only
-// console.log(dummyStore.getState());
-export type RootState = ReturnType<typeof dummyStore.getState>;
 export type AppDispatch = typeof dummyStore.dispatch;
+
+export const wrapper = createWrapper(createStore, { debug: false });
