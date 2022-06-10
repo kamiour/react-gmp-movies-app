@@ -11,8 +11,7 @@ interface ModalConfig {
 
 let Modal = ({ title, handleClose, children }) => <div>SSR mode</div>;
 
-// TODO: check process
-if ((process as any).browser) {
+if (typeof window !== 'undefined') {
   const modalRoot = document.getElementById('modal-container');
 
   Modal = ({ title, handleClose, children }: PropsWithChildren<ModalConfig>) => {
