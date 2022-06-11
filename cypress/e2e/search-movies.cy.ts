@@ -55,6 +55,8 @@ describe('Search movies', () => {
         cy.get('input.form-input').type('Moon');
         cy.get('button').should('contain.text', 'Search').should('be.enabled').click();
       });
+    
+    cy.get('h2').should('contain.text', 'Loading...');
 
     cy.get('ul.movies-list')
       .should('be.visible')
