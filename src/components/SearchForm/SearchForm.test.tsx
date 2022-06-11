@@ -39,7 +39,7 @@ describe('SearchForm', () => {
           pathname: `/search/[search]`,
           query: {
             sortBy: 'release_date',
-            search: 'Moon',
+            search: 'moon',
           },
         },
         undefined,

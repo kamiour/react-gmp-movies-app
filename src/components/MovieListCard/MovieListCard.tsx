@@ -8,8 +8,8 @@ import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import { handleImgOnError } from '../../utils/handleImgOnError';
 import EditMovieFormik from '../EditMovieFormik/EditMovieFormik';
+import { NextImageCustom } from '../NextImageCustom/NextImageCustom';
 // import './MovieListCard.scss';
 
 interface MoviesListCardProps {
@@ -54,7 +54,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
       undefined,
       { shallow: true, scroll: true }
     );
-  }, [movie.id]);
+  }, [movie.id, router]);
 
   const closeEditMovieModal = () => setMovieToEdit(null);
   const closeDeleteMovieModal = () => setMovieToDelete(null);
@@ -76,13 +76,15 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   return (
     <div className="movies-list-card">
-      <img
+      <NextImageCustom
         className="movies-list-card-image"
         alt={`${title} poster`}
         src={poster_path}
+        width={300}
+        height={500}
         onClick={handleMovieSelect}
-        onError={handleImgOnError}
       />
+
       <div className="movies-list-card-header">
         <span className="movies-list-card-title" onClick={handleMovieSelect}>
           {title}
