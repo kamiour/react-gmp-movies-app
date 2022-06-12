@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-// import './ErrorBoundary.scss';
+import styles from './ErrorBoundary.module.scss';
 
 type ErrorBoundaryProps = PropsWithChildren<{
   componentName: string;
@@ -25,7 +25,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
 
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <h2 className="error-boundary">Something went wrong with {componentName}!</h2>;
+      return <h2 className={styles.errorBoundary}>Something went wrong with {componentName}!</h2>;
     }
 
     return children;

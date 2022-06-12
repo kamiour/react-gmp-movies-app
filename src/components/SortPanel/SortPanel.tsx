@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import { sortSelectStyles } from './sortSelectStyles';
 import { SelectValue } from '../../models/SelectValue';
-// import './SortPanel.scss';
+import styles from './SortPanel.module.scss';
 
 interface SortPanelProps {
   sortOptions: SelectValue[];
@@ -15,8 +15,8 @@ export default function SortPanel({ sortOptions, sortByValue, handleSelect }: So
   const selectId = 'sort-select';
 
   return (
-    <div className="sort-panel">
-      <span className="sort-panel-label">Sort by</span>
+    <div className={styles.sortPanel}>
+      <span className={styles.sortPanelLabel}>Sort by</span>
       <Select
         value={sortByValue}
         options={sortOptions}
