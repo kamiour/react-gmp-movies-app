@@ -32,9 +32,8 @@ export const createStore = () => {
   });
 };
 
-// just to get AppDispatch type;
-// TODO: remove if not needed
-const dummyStore = configureStore({
+// to get AppDispatch type and to use in Storybook
+export const dummyStore = configureStore({
   reducer: masterReducer,
 });
 

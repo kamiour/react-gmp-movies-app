@@ -1,18 +1,14 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { within, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
 import MoviesListCard from '../components/MovieListCard/MovieListCard';
 import { movies } from '../mocks/movies';
+import { withDarkBg } from '../../.storybook/decorators';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'MoviesListCard',
+  title: 'Movies List Card',
   component: MoviesListCard,
-  argTypes: {
-    handleSelect: { action: true },
-    handleClose: { action: true },
-  },
+  decorators: [withDarkBg],
 } as ComponentMeta<typeof MoviesListCard>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
