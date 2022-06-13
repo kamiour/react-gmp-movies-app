@@ -6,8 +6,9 @@ export const NextImageCustom = ({ alt, ...props }) => {
 
   return (
     <Image
+      unoptimized // to make it work in Storybook
       {...props}
-      alt={alt} // To fix lint warning
+      alt={alt} // to fix lint warning
       src={src}
       placeholder="blur"
       blurDataURL="/images/img-placeholder.png"
