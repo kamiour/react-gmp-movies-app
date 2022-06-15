@@ -10,10 +10,10 @@ export default function SearchForm() {
   const [searchParams] = useSearchParams();
   const inputIdPrefix = useId();
 
-  const handleSubmit = ({ searchValue }) => {
+  const handleSubmit = ({ searchValue }: { searchValue: string }) => {
     navigate(
       {
-        pathname: `/search/${searchValue}`,
+        pathname: `/search/${searchValue.toLowerCase()}`,
         search: searchParams.toString(),
       },
       { replace: true }
@@ -24,7 +24,7 @@ export default function SearchForm() {
     <div className="searchform-wrapper">
       <h1 className="searchform-title">Find your movie</h1>
 
-      <Formik initialValues={{ searchValue: searchQuery }} onSubmit={handleSubmit}>
+      <Formik initialValues={{ searchValue: searchQuery || '' }} onSubmit={handleSubmit}>
         <Form className="searchform">
           <TextField
             name="searchValue"
@@ -35,7 +35,9 @@ export default function SearchForm() {
             placeholder="What do you want to watch?"
           />
 
-          <button className="app-btn searchform-btn" type="submit">Search</button>
+          <button className="app-btn searchform-btn" type="submit">
+            Search
+          </button>
         </Form>
       </Formik>
     </div>

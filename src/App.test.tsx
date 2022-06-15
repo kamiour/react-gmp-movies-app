@@ -1,8 +1,24 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/find your movie/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock('./containers/HeroContainer/HeroContainer', () => {
+  return () => <div>Mocked Hero Container</div>;
+});
+
+jest.mock('./components/Main/Main', () => {
+  return () => <div>Mocked Main</div>;
+});
+
+jest.mock('./components/Footer/Footer', () => {
+  return () => <div>Mocked Footer</div>;
+});
+
+describe('App', () => {
+  it('should render Hero Container, Main and Footer sections', () => {
+    const { getByText } = render(<App />);
+
+    expect(getByText('Mocked Hero Container')).toBeInTheDocument();
+    expect(getByText('Mocked Main')).toBeInTheDocument();
+    expect(getByText('Mocked Footer')).toBeInTheDocument();
+  });
 });
