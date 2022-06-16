@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
@@ -5,7 +6,6 @@ import EditMovieFormik from '../../components/EditMovieFormik/EditMovieFormik';
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
 import Logo from '../../components/Logo/Logo';
-import Modal from '../../components/Modal/Modal';
 import MovieCardSelectedContainer from '../../components/MovieCardSelectedContainer/MovieCardSelectedContainer';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -32,6 +32,8 @@ export default function HeroContainer() {
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 
   const closeModal = () => setShouldShowAddMovieModal(false);
+
+  const Modal = dynamic(() => import('../../components/Modal/Modal'), { ssr: false });
 
   const modal = shouldShowAddMovieModal ? (
     <Modal title="Add Movie" handleClose={closeModal}>

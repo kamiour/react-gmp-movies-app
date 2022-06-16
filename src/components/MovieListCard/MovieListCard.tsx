@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from '../Dropdown/Dropdown';
 import { Movie } from '../../models/Movie';
-import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
 import EditMovieFormik from '../EditMovieFormik/EditMovieFormik';
 import { NextImageCustom } from '../NextImageCustom/NextImageCustom';
+import dynamic from 'next/dynamic';
 // import './MovieListCard.scss';
 
 interface MoviesListCardProps {
@@ -61,6 +61,8 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   const memoizedYear = useMemo(() => getYear(release_date), [release_date]);
   const memoizedGenres = useMemo(() => joinGenres(genres), [genres]);
+
+  const Modal = dynamic(() => import('../../components/Modal/Modal'), { ssr: false });
 
   const deleteMovieModal = movieToDelete ? (
     <Modal title="Delete movie" handleClose={closeDeleteMovieModal}>
