@@ -2,7 +2,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PropsWithChildren, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './Modal.scss';
+// import './Modal.scss';
 
 interface ModalConfig {
   title: string;

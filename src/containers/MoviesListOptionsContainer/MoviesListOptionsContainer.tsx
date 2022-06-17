@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import MoviesFound from '../../components/MoviesFound/MoviesFound';
 import SortPanel from '../../components/SortPanel/SortPanel';
@@ -8,26 +8,33 @@ import { sortOptions } from './sortOptions';
 import { SelectValue } from '../../models/SelectValue';
 import { Genre } from '../../models/Genre';
 import { useMovies } from '../../hooks/useMovies';
-import './MoviesListOptionsContainer.scss';
+// import './MoviesListOptionsContainer.scss';
 
 export default function MoviesListOptionsContainer() {
   const { movies } = useMovies();
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const memoizedGenre = useMemo(() => searchParams.get('genre'), [searchParams]);
-  const memoizedSortBy = useMemo(() => searchParams.get('sortBy'), [searchParams]);
+  const router = useRouter();
+  const memoizedGenre = useMemo(() => router.query.genre as string, [router.query.genre]);
+  const memoizedSortBy = useMemo(() => router.query.sortBy as string, [router.query.sortBy]);
   const memoizedFetchMoviesNumber = useMemo(() => movies.length, [movies]);
 
   const handleQueryParamChange = (selectedItem: SelectValue | Genre, paramName: 'genre' | 'sortBy'): void => {
     const selectedValue: string = selectedItem.value;
 
     if (selectedValue) {
-      searchParams.set(paramName, selectedValue);
+      router.query[paramName] = selectedValue;
     } else {
-      searchParams.delete(paramName);
+      delete router.query[paramName];
     }
 
-    setSearchParams(searchParams);
+    router.push(
+      {
+        pathname: router.pathname,
+        query: router.query,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   const getSortByValue = (value: string | null): SelectValue | null => {

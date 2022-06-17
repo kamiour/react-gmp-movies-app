@@ -1,16 +1,16 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { useSearchParams } from 'react-router-dom';
 import Dropdown from '../Dropdown/Dropdown';
 import { Movie } from '../../models/Movie';
-import Modal from '../Modal/Modal';
 import DeleteMovieConfirm from '../DeleteMovieConfirm/DeleteMovieConfirm';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
-import { handleImgOnError } from '../../utils/handleImgOnError';
 import EditMovieFormik from '../EditMovieFormik/EditMovieFormik';
-import './MovieListCard.scss';
+import { NextImageCustom } from '../NextImageCustom/NextImageCustom';
+import dynamic from 'next/dynamic';
+// import './MovieListCard.scss';
 
 interface MoviesListCardProps {
   movie: Movie;
@@ -32,7 +32,7 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState<Movie | null>(null);
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter();
 
   const handleEditClicked = useCallback(() => {
     setIsContextMenuOpen(false);
@@ -45,16 +45,24 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
   }, [movie]);
 
   const handleMovieSelect = useCallback(() => {
-    searchParams.set('movie', movie.id.toString());
-    setSearchParams(searchParams);
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [movie.id, searchParams, setSearchParams]);
+    router.query.movie = movie.id.toString();
+    router.push(
+      {
+        pathname: router.pathname,
+        query: router.query,
+      },
+      undefined,
+      { shallow: true, scroll: true }
+    );
+  }, [movie.id, router]);
 
   const closeEditMovieModal = () => setMovieToEdit(null);
   const closeDeleteMovieModal = () => setMovieToDelete(null);
 
   const memoizedYear = useMemo(() => getYear(release_date), [release_date]);
   const memoizedGenres = useMemo(() => joinGenres(genres), [genres]);
+
+  const Modal = dynamic(() => import('../../components/Modal/Modal'), { ssr: false });
 
   const deleteMovieModal = movieToDelete ? (
     <Modal title="Delete movie" handleClose={closeDeleteMovieModal}>
@@ -70,13 +78,15 @@ function MoviesListCard({ movie }: MoviesListCardProps) {
 
   return (
     <div className="movies-list-card">
-      <img
+      <NextImageCustom
         className="movies-list-card-image"
         alt={`${title} poster`}
         src={poster_path}
+        width={300}
+        height={500}
         onClick={handleMovieSelect}
-        onError={handleImgOnError}
       />
+
       <div className="movies-list-card-header">
         <span className="movies-list-card-title" onClick={handleMovieSelect}>
           {title}

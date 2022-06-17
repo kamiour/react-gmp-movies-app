@@ -1,28 +1,29 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import AddMovieBtn from '../../components/AddMovieBtn/AddMovieBtn';
 import EditMovieFormik from '../../components/EditMovieFormik/EditMovieFormik';
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
 import Logo from '../../components/Logo/Logo';
-import Modal from '../../components/Modal/Modal';
 import MovieCardSelectedContainer from '../../components/MovieCardSelectedContainer/MovieCardSelectedContainer';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useEffectAfterFirstMount } from '../../hooks/useEffectAfterFirstMount,';
 import { useSelectedMovie } from '../../hooks/useSelectedMovie';
 import { fetchMovieById, resetSelectedMovie } from '../../store/selectedMovieReducer';
 
 export default function HeroContainer() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const [searchParams] = useSearchParams();
-  const selectedMovieId = searchParams.get('movie');
+  const { movie: selectedMovieId } = router.query;
 
   const { movie: selectedMovie, isLoading: isSelectedMovieLoading, isError: isSelectedMovieError } = useSelectedMovie();
 
-  useEffect(() => {
+  useEffectAfterFirstMount(() => {
     if (selectedMovieId) {
-      dispatch(fetchMovieById(selectedMovieId));
+      dispatch(fetchMovieById(selectedMovieId as string));
     } else {
       dispatch(resetSelectedMovie());
     }
@@ -31,6 +32,8 @@ export default function HeroContainer() {
   const [shouldShowAddMovieModal, setShouldShowAddMovieModal] = useState(false);
 
   const closeModal = () => setShouldShowAddMovieModal(false);
+
+  const Modal = dynamic(() => import('../../components/Modal/Modal'), { ssr: false });
 
   const modal = shouldShowAddMovieModal ? (
     <Modal title="Add Movie" handleClose={closeModal}>
