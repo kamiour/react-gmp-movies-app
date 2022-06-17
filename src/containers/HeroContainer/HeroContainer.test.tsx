@@ -73,20 +73,6 @@ describe('HeroContainer', () => {
     expect(queryByText('Mocked Search Form')).toBeNull();
   });
 
-  it('should display add movie modal when add movie button is clicked', () => {
-    jest.spyOn(useSelectedMovieModule, 'useSelectedMovie').mockReturnValue(store.getState().selectedMovie);
-
-    const { getByText, queryByText } = renderInMockedStoreProvider();
-
-    expect(queryByText('Mocked Modal')).toBeNull();
-
-    const addMovieButton = getByText(/add movie/i);
-    expect(addMovieButton).toBeInTheDocument();
-    userEvent.click(addMovieButton);
-
-    expect(getByText('Mocked Modal')).toBeInTheDocument();
-  });
-
   function renderInMockedStoreProvider() {
     return render(
       <Provider store={store}>

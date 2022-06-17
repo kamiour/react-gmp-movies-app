@@ -54,46 +54,6 @@ describe('MoviesListCard', () => {
     expect(dropdown).toBeInTheDocument();
   });
 
-  it('should display Edit Movie Modal on dropdown edit option select', () => {
-    const { getByTitle, getByRole, getByText } = renderMovieListCard();
-
-    const contextMenuBtn = getByTitle('context-menu-button');
-    expect(contextMenuBtn).toBeInTheDocument();
-
-    userEvent.click(contextMenuBtn);
-
-    const dropdown = getByRole('menu');
-    expect(dropdown).toBeInTheDocument();
-
-    const editOption = getByText('Edit');
-    expect(editOption).toBeInTheDocument();
-
-    userEvent.click(editOption);
-
-    const editModal = getByText(/Edit Movie/i);
-    expect(editModal).toBeInTheDocument();
-  });
-
-  it('should display Delete Movie Modal on dropdown delete option select', () => {
-    const { getByTitle, getByRole, getByText } = renderMovieListCard();
-
-    const contextMenuBtn = getByTitle('context-menu-button');
-    expect(contextMenuBtn).toBeInTheDocument();
-
-    userEvent.click(contextMenuBtn);
-
-    const dropdown = getByRole('menu');
-    expect(dropdown).toBeInTheDocument();
-
-    const deleteOption = getByText('Delete');
-    expect(deleteOption).toBeInTheDocument();
-
-    userEvent.click(deleteOption);
-
-    const deleteModal = getByText(/Delete Movie/i);
-    expect(deleteModal).toBeInTheDocument();
-  });
-
   it('should set movie query param and trigger scroll to top on movie select', () => {
     const { getByAltText } = renderMovieListCard();
 
