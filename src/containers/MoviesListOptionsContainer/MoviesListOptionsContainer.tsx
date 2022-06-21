@@ -8,7 +8,7 @@ import { sortOptions } from './sortOptions';
 import { SelectValue } from '../../models/SelectValue';
 import { Genre } from '../../models/Genre';
 import { useMovies } from '../../hooks/useMovies';
-// import './MoviesListOptionsContainer.scss';
+import styles from './MoviesListOptionsContainer.module.scss';
 
 export default function MoviesListOptionsContainer() {
   const { movies } = useMovies();
@@ -47,7 +47,7 @@ export default function MoviesListOptionsContainer() {
 
   return (
     <>
-      <div className="options-panel">
+      <div className={styles.optionsPanel}>
         <FilterPanel
           genres={genres}
           selectedGenre={memoizedGenre}

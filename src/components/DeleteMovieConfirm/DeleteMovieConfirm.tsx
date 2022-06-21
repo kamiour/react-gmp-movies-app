@@ -3,6 +3,9 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useQueryParams } from '../../hooks/useQueryParams';
 import { AsyncSubmitStatus } from '../../models/AsyncSubmitStatus';
 import { deleteMovieById, fetchMovies } from '../../store/moviesReducer';
+import styles from './DeleteMovieConfirm.module.scss';
+import btnStyles from '../../scss/components/button.module.scss';
+import errorStyles from '../../scss/components/form-error.module.scss';
 
 interface DeleteMovieFormValue {
   movieId: number;
@@ -32,13 +35,13 @@ const DeleteMovieConfirm = ({ movieId, handleClose }: DeleteMovieProps) => {
   return (
     <Formik initialValues={{ movieId }} onSubmit={handleFormSubmit}>
       {({ isSubmitting, status }: FormikProps<DeleteMovieFormValue>) => (
-        <Form className="edit-movie-form">
-          {status === AsyncSubmitStatus.SUBMIT_FAIL && <p className="form-error">Submit failed. Please try again.</p>}
+        <Form>
+          {status === AsyncSubmitStatus.SUBMIT_FAIL && <p className={errorStyles.formError}>Submit failed. Please try again.</p>}
 
-          <div className="confirm-modal">
-            <p className="confirm-text">Are you sure you want to delete this movie?</p>
+          <div className={styles.confirmModal}>
+            <p className={styles.confirmText}>Are you sure you want to delete this movie?</p>
 
-            <button className="app-btn confirm-btn" type="submit" disabled={isSubmitting}>
+            <button className={`${btnStyles.appBtn} ${styles.confirmBtn}`} type="submit" disabled={isSubmitting}>
               Confirm
             </button>
           </div>

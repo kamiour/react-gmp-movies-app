@@ -1,6 +1,6 @@
 import GenreToggleButton from '../GenreToggleButton/GenreToggleButton';
 import { Genre } from '../../models/Genre';
-// import './FilterPanel.scss';
+import styles from './FilterPanel.module.scss';
 
 interface GenreToggleProps {
   genres: Genre[];
@@ -18,7 +18,7 @@ export default function GenreTogglePanel({ genres, selectedGenre, handleSelect }
   };
 
   return (
-    <div className="genre-panel">
+    <div className={styles.genrePanel}>
       {genres.map((genre: Genre) => {
         return (
           <GenreToggleButton

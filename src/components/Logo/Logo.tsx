@@ -1,8 +1,8 @@
-// import './Logo.scss';
+import styles from './Logo.module.scss';
 
 const Logo = () => (
-  <a className="logo-link" href="/">
-    <span className="logo-link-bold">netflix</span>roulette
+  <a className={styles.logoLink} href="/">
+    <span className={styles.logoLinkBold}>netflix</span>roulette
   </a>
 );
 

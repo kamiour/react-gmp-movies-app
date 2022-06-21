@@ -4,7 +4,7 @@ import { Movie } from '../../models/Movie';
 import { getYear } from '../../utils/getYearFromDate';
 import { joinGenres } from '../../utils/joinGenresWithComma';
 import { NextImageCustom } from '../NextImageCustom/NextImageCustom';
-// import './MovieCardSelected.scss';
+import styles from './MovieCardSelected.module.scss';
 
 interface MovieCardSelectedProps {
   movie: Movie;
@@ -18,24 +18,24 @@ function MovieCardSelected({ movie }: MovieCardSelectedProps) {
   const memoizedDuration = useMemo(() => transformDuration(runtime), [runtime]);
 
   return (
-    <div className="movie-card-selected">
-      <div className="image-container">
-        <NextImageCustom className="movie-card-selected-image" alt={`${title} poster`} src={poster_path} width={320} height={480} />
+    <div className={styles.movieCardSelected}>
+      <div className={styles.imageContainer}>
+        <NextImageCustom className={styles.movieCardSelectedImage} alt={`${title} poster`} src={poster_path} width={320} height={480} />
       </div>
 
-      <div className="movie-card-selected-content">
-        <div className="movie-card-selected-content-header">
-          <span className="movie-card-selected-title">{title}</span>
-          <span className="movie-card-selected-rating">{vote_average}</span>
+      <div className={styles.movieCardSelectedContent}>
+        <div className={styles.movieCardSelectedContentHeader}>
+          <span className={styles.movieCardSelectedTitle}>{title}</span>
+          <span className={styles.movieCardSelectedRating}>{vote_average}</span>
         </div>
-        <div className="movie-card-selected-genres">
+        <div className={styles.movieCardSelectedGenres}>
           <span>{memoizedGenres}</span>
         </div>
-        <div className="movie-card-selected-info">
+        <div className={styles.movieCardSelectedInfo}>
           <span>{memoizedYear}</span>
           <span>{memoizedDuration}</span>
         </div>
-        <div className="movie-card-selected-overview">{overview}</div>
+        <div className={styles.movieCardSelectedOverview}>{overview}</div>
       </div>
     </div>
   );
